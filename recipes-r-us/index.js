@@ -1,4 +1,4 @@
-import express, { response } from "express";
+import express from "express";
 import bodyParser from "body-parser";
 import bcrypt from "bcrypt";
 import pg from "pg";
@@ -132,19 +132,38 @@ app.get("/signin", (req, res) => {
 });
 
 // post user sign in
+// updated: added password comparison with hashed password
 app.post("/signin", async (req, res) => {
     // get username and password from form
     let username = req.body.user_id;
     let password = req.body.password;
 
-    // try to find a user that has that username AND that password
+    // try to find a user that has that username 
+    // updated: using parametrized query (prevent SQL injection)
     try {
-        const response = await db.query(`SELECT * FROM users WHERE user_id = '${username}' AND password = '${password}'`);
+        const response = await db.query('SELECT * FROM users WHERE user_id = $1', [username]);
         // update user to the response
-        user = response.rows;
-    } catch (error) {
-        console.error("Error executing query", error.stack);
-    }
+    if (response.rows.length === 0) {
+            // No user found
+            return res.render("signin.ejs", {response: "Incorrect username or password.", user: [], loggedIn: false});
+        }
+        
+        const foundUser = response.rows[0];
+        
+        // compare password with hashed password (Safety Feature)
+        const passwordMatch = await bcrypt.compare(password, foundUser.password);
+        
+        if (!passwordMatch) {
+            // password doesn't match
+            return res.render("signin.ejs", {response: "Incorrect username or password.", user: [], loggedIn: false});
+        }
+        
+        // password matches - update user
+        user = response.rows;  
+
+        } catch (error) {
+            console.error("Error executing query", error.stack);
+        }
 
     // if that user exists
     if(user[0]) {
@@ -165,6 +184,78 @@ app.post("/signout", (req, res) => {
 
     // then redirect to home page
     res.redirect("/");
+});
+
+// recipe edit route, ownership check
+app.get("/:id/edit", async (req, res) => {
+    const recipe_id = req.params.id;
+    
+    // Check if user is logged in
+    if (!loggedIn || !user[0]) {
+        return res.redirect("/signin");
+    }
+    
+    const user_id = user[0].creator_id;
+    
+    try {
+        const result = await db.query('SELECT * FROM recipes WHERE recipe_id = $1', [recipe_id]);
+        
+        if (result.rows.length === 0) {
+            return res.status(404).send('Recipe not found');
+        }
+        
+        const recipe = result.rows[0];
+        
+        // ownership check, only recipe owner can edit
+        if (recipe.creator_user_id !== user_id) {
+            return res.status(403).send('You do not have permission to edit this recipe');
+        }
+        
+        // if user owns the recipe, render edit page (for future use)
+        res.render("edit-recipe.ejs", { recipe, user, loggedIn });
+        
+    } catch (error) {
+        console.error("Recipe edit error:", error.stack);
+        res.status(500).send('Error loading recipe');
+    }
+});
+
+//recipe delete, ownership check
+app.post("/:id/delete", async (req, res) => {
+    const recipe_id = req.params.id;
+    
+    // check if user is logged in
+    if (!loggedIn || !user[0]) {
+        return res.redirect("/signin");
+    }
+    
+    const user_id = user[0].creator_id;
+    
+    try {
+        const result = await db.query(
+            'SELECT creator_user_id FROM recipes WHERE recipe_id = $1',
+            [recipe_id]
+        );
+        
+        if (result.rows.length === 0) {
+            return res.status(404).send('Recipe not found');
+        }
+        
+        const recipe = result.rows[0];
+        
+        // ownership check, only recipe owner can delete
+        if (recipe.creator_user_id !== user_id) {
+            return res.status(403).send('You do not have permission to delete this recipe');
+        }
+        
+        // delete recipe if user owns it
+        await db.query('DELETE FROM recipes WHERE recipe_id = $1', [recipe_id]);
+        res.redirect("/");
+        
+    } catch (error) {
+        console.error("Recipe deletion error:", error.stack);
+        res.status(500).send('Error deleting recipe');
+    }
 });
 
 // starting server
