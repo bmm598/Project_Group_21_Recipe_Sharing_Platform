@@ -1,7 +1,9 @@
 <%- include("partials/header.ejs") %>
 
+<!-- if recipes list exists -->
 <% if (locals.recipes) { %>
     <div class="recipe-container">
+        <!-- for each recipe in recipes create this object -->
         <% recipes.forEach(recipe => { %>
             <div class="recipe-object">
                     <%= recipe.date_created %> 
@@ -15,6 +17,8 @@
                 <p> 
                     <%= recipe.body %> 
                 </p>
+                <!-- if the current user is the owner of this post, then show edit and delete -->
+                <% if(locals.user[0].creator_id == recipe.creator_user_id) { %>
                 <div class="edit-object">
                     <form id="delete-form" action="<%= recipe.recipe_id %>/delete" method="POST">
                         <div class="form-object">
@@ -27,11 +31,13 @@
                         </div>
                     </form>
                 </div>
+                <% } %>
             </div>
         <% }); %>
     </div>
 <% } %>
 
+<!-- if user is logged in then allow them to draft a recipe post -->
 <% if(locals.loggedIn == true) { %>
 <div class="body-container">
         <div class="body-object">
@@ -39,7 +45,7 @@
         </div>
         <div class="body-object">
             <form id="recipe-form" action="/submit" method="POST">
-                <div class="recipe-form-container">
+                <div class="form-container">
                     <div class="form-object">
                         <input type="text" name="title" placeholder="Title*" required>
                     </div>
@@ -54,6 +60,7 @@
                     <div class="form-object">
                         <input type="submit" value="Submit">
                     </div>
+                    <!-- image upload -->
                 </div>
             </form>
         </div>

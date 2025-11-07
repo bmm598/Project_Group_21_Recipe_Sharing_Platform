@@ -1,0 +1,32 @@
+<%- include("partials/header.ejs") %>
+
+    <div class="body-container">
+        <div class="body-object">
+            <h2>Sign Up</h2>
+        </div>
+        <div class="body-object">
+            <form id="sign-up-form" action="/signup" method="POST">
+                <div class="form-container">
+                    <div class="form-object">
+                        <input type="text" name="name" placeholder="Full Name*" required>
+                    </div>
+                    <div class="form-object">
+                        <input type="text" name="user_id" placeholder="Username*" required>
+                    </div>
+                    <div class="form-object">
+                        <input type="password" name="password" placeholder="Password*" required>
+                    </div>
+                    <div class="form-object">
+                        <input type="submit" value="Submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <% if (locals.response) { %>
+            <div class="body-object">
+                <h4><%= response %></h4>
+            </div>
+        <% } %>
+    </div>
+
+<%- include("partials/footer.ejs") %>
