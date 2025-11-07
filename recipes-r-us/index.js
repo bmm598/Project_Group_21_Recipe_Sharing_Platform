@@ -1,5 +1,6 @@
-import express from "express";
+import express, { response } from "express";
 import bodyParser from "body-parser";
+import bcrypt from "bcrypt";
 import pg from "pg";
 import recipes from "./recipes.js";
 
@@ -85,6 +86,15 @@ app.post("/signup", async (req, res) => {
     // get name and convert to capitals for first letters
     let name = toTitleCase(req.body.name);
 
+    // password validaiton, ensures passwords are at least a certain length
+    if (password.length < 8) {
+        return res.render("signup.ejs", {
+            response: "Password must be at least 8 characters long.",
+            user,
+            loggedIn
+        });
+    }
+
     //try to find a user with given username
     let selectedUser = [];
     try {
@@ -102,7 +112,13 @@ app.post("/signup", async (req, res) => {
     } else {
         // try to add new user to db
         try {
-            await db.query(`INSERT INTO users VALUES ('${username}', '${password}', '${name}')`);
+            // hash password with bcrypt, use 10 salt rounds for security
+            const hashedPassword = await bcrypt.hash(password,10)
+            // updated using parameterized query with hashed password
+            await db.query(
+                `INSERT INTO users (user_Id, password, name) VALUES ($1 $2 $3)`,
+                [username, hashedPassword, name]
+            );
             return res.redirect("/signin");
         } catch (error) {
             console.error("Error executing query", error.stack);
