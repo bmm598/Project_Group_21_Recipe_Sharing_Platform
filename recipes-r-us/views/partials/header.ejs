@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/header.css">
+    <link rel="stylesheet" href="/styles/footer.css">
+    <title>Recipe's R Us</title>
+</head>
+<header>
+    <div class="header-container">
+        <div class="header-object">
+            <a href="./"><h1>Recipe's R Us</h1></a>
+        </div>
+        <div class="header-object">
+            <h3>Recipe Sharing Platform</h3>
+        </div>
+        <% if(locals.loggedIn == true) { %>
+            <div class="header-object">
+                <h3>Hello, <%= user[0].name %></h3>
+                <form id="sign-out" action="/signout" method="post">
+                    <div class="form-object">
+                        <input type="submit" value="Sign Out">
+                    </div>
+                </form>
+            </div>
+        <% } else { %>
+            <div class="header-object">
+                <form id="sign-in" action="/signin" method="GET">
+                    <div class="form-object">
+                        <input type="submit" value="Sign In">
+                    </div>
+                </form>
+                <form id="sign-up" action="/signup" method="GET">
+                    <div class="form-object">
+                        <input type="submit" value="Sign Up">
+                    </div>
+                </form>
+            </div>
+        <% } %>
+    </div>
+</header>
+<body>

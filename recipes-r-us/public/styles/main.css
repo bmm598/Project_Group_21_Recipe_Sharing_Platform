@@ -1,0 +1,91 @@
+body {
+    font-family: Helvetica;
+    margin: 0;
+}
+
+.body-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center; 
+    padding-bottom: 100px;
+}
+
+.body-object {
+    display: flex;
+    /*font-size: 30px;*/
+    flex-direction: row;
+    color: black;
+    max-width: 500px;
+    gap: 50px;
+}
+
+.recipe-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center; 
+    padding-bottom: 100px;
+    gap: 25px;
+    padding: 50px;
+}
+
+.recipe-object {
+    display: flex;
+    flex-direction: column;
+    color: black;
+    max-width: 500px;
+    min-width: 400px;
+    box-shadow: 0 0 5px gray;
+    background-color: white;
+    padding: 50px;
+}
+
+.recipe-form-container {
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: start; 
+    width: 100%;
+    box-shadow: 0 0 5px gray;
+    background-color: white;
+    justify-content: space-evenly;
+    padding: 50px;
+    box-sizing: border-box;
+    gap: 15px;
+}
+
+.form-object {
+    width: 100%;
+    text-align: left;
+}
+
+.form-object input {
+    padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-object textarea {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 15px;
+    resize: vertical;
+    font-family: Helvetica;
+    overflow: auto;
+    resize: vertical;
+    height: 500px;
+}
+
+.edit-object {
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-end;
+    gap: 15px;
+}

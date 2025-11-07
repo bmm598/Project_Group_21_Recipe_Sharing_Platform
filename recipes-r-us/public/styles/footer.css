@@ -1,0 +1,21 @@
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    background-color: lightgray;
+    color: black;
+    justify-content: space-around;
+    padding: 50px;
+    border-bottom: 1px solid darkgray;
+}
+
+.footer-object {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+
+}
+
+.footer-object ul {
+    list-style-type: none;
+}

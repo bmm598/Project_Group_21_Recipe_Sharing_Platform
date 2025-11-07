@@ -1,0 +1,63 @@
+<%- include("partials/header.ejs") %>
+
+<% if (locals.recipes) { %>
+    <div class="recipe-container">
+        <% recipes.forEach(recipe => { %>
+            <div class="recipe-object">
+                    <%= recipe.date_created %> 
+                <h3> 
+                    <%= recipe.title %> 
+                </h3>
+                <p> 
+                    by: <%= recipe.creator_name %> 
+                </p>
+                <img src="<%= recipe.img %>" alt="Image of <%= recipe.title %>">
+                <p> 
+                    <%= recipe.body %> 
+                </p>
+                <div class="edit-object">
+                    <form id="delete-form" action="<%= recipe.recipe_id %>/delete" method="POST">
+                        <div class="form-object">
+                            <input type="submit" value="Delete">
+                        </div>
+                    </form>
+                    <form id="edit-form" action="<%= recipe.recipe_id %>/edit" method="GET">
+                        <div class="form-object">
+                            <input type="submit" value="Edit">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+<% } %>
+
+<% if(locals.loggedIn == true) { %>
+<div class="body-container">
+        <div class="body-object">
+            <h2>Draft a Recipe Post</h2>
+        </div>
+        <div class="body-object">
+            <form id="recipe-form" action="/submit" method="POST">
+                <div class="recipe-form-container">
+                    <div class="form-object">
+                        <input type="text" name="title" placeholder="Title*" required>
+                    </div>
+                    <div class="form-object">
+                        <p> 
+                            by: <%= user[0].name %> 
+                        </p>
+                    </div>
+                    <div class="form-object">
+                        <textarea  name="content" placeholder="Content*" required></textarea>
+                    </div>
+                    <div class="form-object">
+                        <input type="submit" value="Submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+</div>
+<% } %>
+
+<%- include("partials/footer.ejs") %>

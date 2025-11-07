@@ -1,0 +1,28 @@
+a {
+    text-decoration: none;
+    color: black;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.1),0 2px 10px 0 rgba(0,0,0,0.08);
+}
+
+.header-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    background-color: white;
+    color: black;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-object {
+    display: flex;
+    padding: 10px;
+    gap: 15px;
+    align-items: center;
+}
