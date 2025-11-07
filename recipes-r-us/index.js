@@ -49,7 +49,7 @@ let user = [{
 }];
 
 // logged in boolean
-let loggedIn = false;
+let loggedIn = true;
 
 //requests
 
@@ -61,6 +61,14 @@ app.get("/", (req, res) => {
         user, 
         loggedIn,
     });
+})
+
+app.get("/accountcenter", (req, res) => {
+    // render the account center page
+    res.render("accountcenter.ejs", {
+        user,
+        loggedIn,
+    })
 })
 
 // get new user sign up page

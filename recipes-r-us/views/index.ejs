@@ -18,19 +18,21 @@
                     <%= recipe.body %> 
                 </p>
                 <!-- if the current user is the owner of this post, then show edit and delete -->
-                <% if(locals.user[0].creator_id == recipe.creator_user_id) { %>
-                <div class="edit-object">
-                    <form id="delete-form" action="<%= recipe.recipe_id %>/delete" method="POST">
-                        <div class="form-object">
-                            <input type="submit" value="Delete">
-                        </div>
-                    </form>
-                    <form id="edit-form" action="<%= recipe.recipe_id %>/edit" method="GET">
-                        <div class="form-object">
-                            <input type="submit" value="Edit">
-                        </div>
-                    </form>
-                </div>
+                <% if(locals.loggedIn == true) { %>
+                    <% if(locals.user[0].creator_id == recipe.creator_user_id) { %>
+                    <div class="edit-object">
+                        <form id="delete-form" action="<%= recipe.recipe_id %>/delete" method="POST">
+                            <div class="form-object">
+                                <input type="submit" value="Delete">
+                            </div>
+                        </form>
+                        <form id="edit-form" action="<%= recipe.recipe_id %>/edit" method="GET">
+                            <div class="form-object">
+                                <input type="submit" value="Edit">
+                            </div>
+                        </form>
+                    </div>
+                    <% } %>
                 <% } %>
             </div>
         <% }); %>

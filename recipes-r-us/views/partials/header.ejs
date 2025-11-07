@@ -20,6 +20,7 @@
         <% if(locals.loggedIn == true) { %>
             <div class="header-object">
                 <h3>Hello, <%= user[0].name %></h3>
+                <a href="./accountcenter" ><img src="/images/icons/user.png" alt="account icon"></a>
                 <form id="sign-out" action="/signout" method="post">
                     <div class="form-object">
                         <input type="submit" value="Sign Out">
