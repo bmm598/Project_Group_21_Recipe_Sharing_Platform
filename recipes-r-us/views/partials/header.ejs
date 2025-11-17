@@ -21,12 +21,23 @@
         <% if(locals.loggedIn == true) { %>
             <div class="header-object">
                 <h3>Hello, <%= user[0].name %></h3>
-                <a href="./accountcenter" ><img src="/images/icons/user.png" alt="account icon"></a>
-                <form id="sign-out" action="/signout" method="post">
-                    <div class="form-object">
-                        <input type="submit" value="Sign Out">
+                <div class="dropdown">
+                    <a href="http://localhost:3000/<%= user[0].creator_id %>/accountcenter" ><img src="/images/icons/user.png" alt="account icon" class="dropbtn"></a>
+                    <div class="dropdown-content">
+                        <div class="inner-dropdown">
+                            <a href="http://localhost:3000/<%= user[0].creator_id %>/accountcenter">Account Center</a>
+                            <div class="inner-dropdown-content">
+                                <a href="http://localhost:3000/<%= user[0].creator_id %>/accountcenter/recipes">Your Recipes</a>
+                                <a href="http://localhost:3000/<%= user[0].creator_id %>/accountcenter/collections">Collections</a>
+                                <a href="http://localhost:3000/<%= user[0].creator_id %>/accountcenter/favorites">Favorite Recipes</a>
+                            </div>
+                        </div>
+                        <!-- <a href="#">Link 2</a> -->
+                        <form id="sign-out" action="/signout" method="post">
+                            <input type="submit" value="Sign Out">
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
         <% } else { %>
             <div class="header-object">

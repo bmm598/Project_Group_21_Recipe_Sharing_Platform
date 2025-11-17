@@ -25,7 +25,7 @@ const recipes = [
                 commenter_name: "name",
                 comment: "comment",
             },
-        ]
+        ],
     },
     {
         date_created: "11-7-2025",
@@ -53,7 +53,7 @@ const recipes = [
                 commenter_name: "name",
                 comment: "comment",
             },
-        ]
+        ],
     },
     {
         date_created: "11-7-2025",
@@ -81,7 +81,7 @@ const recipes = [
                 commenter_name: "name",
                 comment: "comment",
             },
-        ]
+        ],
     },
     {
         date_created: "11-7-2025",
@@ -93,6 +93,23 @@ const recipes = [
         recipe_id: 4,
         avg_rating: 2.6,
         total_ratings: 10,
+        comments: [
+            {
+                date_created: "11-16-2025",
+                commenter_name: "name",
+                comment: "comment",
+            },
+            {
+                date_created: "11-16-2025",
+                commenter_name: "name",
+                comment: "comment",
+            },
+            {
+                date_created: "11-16-2025",
+                commenter_name: "name",
+                comment: "comment",
+            },
+        ],
     },
     {
         date_created: "11-7-2025",
@@ -104,6 +121,23 @@ const recipes = [
         recipe_id: 5,
         avg_rating: 4.6,
         total_ratings: 10,
+        comments: [
+            {
+                date_created: "11-16-2025",
+                commenter_name: "name",
+                comment: "comment",
+            },
+            {
+                date_created: "11-16-2025",
+                commenter_name: "name",
+                comment: "comment",
+            },
+            {
+                date_created: "11-16-2025",
+                commenter_name: "name",
+                comment: "comment",
+            },
+        ],
     },
     {
         date_created: "11-7-2025",
@@ -115,6 +149,23 @@ const recipes = [
         recipe_id: 6,
         avg_rating: 1.2,
         total_ratings: 10,
+        comments: [
+            {
+                date_created: "11-16-2025",
+                commenter_name: "name",
+                comment: "comment",
+            },
+            {
+                date_created: "11-16-2025",
+                commenter_name: "name",
+                comment: "comment",
+            },
+            {
+                date_created: "11-16-2025",
+                commenter_name: "name",
+                comment: "comment",
+            },
+        ],
     },
     {
         date_created: "11-7-2025",
@@ -126,6 +177,23 @@ const recipes = [
         recipe_id: 7,
         avg_rating: 3.5,
         total_ratings: 10,
+        comments: [
+            {
+                date_created: "11-16-2025",
+                commenter_name: "name",
+                comment: "comment",
+            },
+            {
+                date_created: "11-16-2025",
+                commenter_name: "name",
+                comment: "comment",
+            },
+            {
+                date_created: "11-16-2025",
+                commenter_name: "name",
+                comment: "comment",
+            },
+        ],
     },
     {
         date_created: "11-7-2025",
@@ -137,6 +205,23 @@ const recipes = [
         recipe_id: 8,
         avg_rating: 3.9,
         total_ratings: 10,
+        comments: [
+            {
+                date_created: "11-16-2025",
+                commenter_name: "name",
+                comment: "comment",
+            },
+            {
+                date_created: "11-16-2025",
+                commenter_name: "name",
+                comment: "comment",
+            },
+            {
+                date_created: "11-16-2025",
+                commenter_name: "name",
+                comment: "comment",
+            },
+        ],
     },
 ]
 

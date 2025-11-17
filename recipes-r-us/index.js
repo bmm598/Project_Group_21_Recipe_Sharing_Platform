@@ -2,12 +2,15 @@ import express from "express";
 import bodyParser from "body-parser";
 import bcrypt from "bcrypt";
 import pg from "pg";
+// import { dirname } from "path";
+// import { fileURLToPath } from "url";
 import recipes from "./recipes.js";
 import { toTitleCase, readApostraphe } from "./helper.js";
 
 // dirname, app, port
 const app = express();
 const port = 3000;
+//const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // db connect
 
@@ -46,11 +49,23 @@ app.get("/", (req, res) => {
     });
 })
 
-app.get("/accountcenter", (req, res) => {
+app.get("/:id/accountcenter", (req, res) => {
+    const account_id = req.params.id;
     // render the account center page
     res.render("accountcenter.ejs", {
         user,
         loggedIn,
+    })
+})
+
+app.get("/:id/accountcenter/recipes", (req, res) => {
+    const account_id = req.params.id;
+    const user_recipes = recipes.filter(recipe => recipe.creator_user_id == account_id);
+
+    res.render("user/user-recipes.ejs", {
+        user,
+        loggedIn,
+        user_recipes,
     })
 })
 
