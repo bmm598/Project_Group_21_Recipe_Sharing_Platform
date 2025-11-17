@@ -1,3 +1,5 @@
+/* styling for recipe section of home page */
+
 .recipe-container {
     display: flex;
     flex-wrap: wrap;
@@ -56,8 +58,11 @@
     text-overflow: ellipsis;
 }
 
+/* styling for individual viewing */
 .view-recipe-img {
     width: 50%;
+    display: block; 
+    margin: 0 auto;
 }
 
 .view-recipe-img img {
@@ -66,6 +71,7 @@
     border-radius: 10px;
 }
 
+/* styling for star rating */
 .star-rating {
     display: inline-block;
     font-size: 1.5em;
