@@ -1,0 +1,114 @@
+<%- include("partials/header.ejs") %>
+
+<div class="body-container">
+    <div class="body-object">
+        <h2>Edit Recipe</h2>
+    </div>
+
+    <div class="body-object">
+        <form
+            id="recipe-form"
+            action="/<%= recipe.recipe_id %>/edit"
+            method="POST"
+        >
+            <div class="form-container">
+                <!-- title -->
+                <div class="form-object">
+                    <input
+                        type="text"
+                        name="title"
+                        value="<%= recipe.title %>"
+                        required
+                    >
+                </div>
+
+                <!-- creator  -->
+                <div class="form-object">
+                    <p>by: <%= user[0].name %></p>
+                </div>
+
+                <!-- description -->
+                <div class="form-object">
+                    <textarea
+                        name="content"
+                        required
+                    ><%= recipe.body %></textarea>
+                </div>
+
+                <!-- ingredients -->
+                <div class="form-object">
+                    <textarea
+                        name="ingredients"
+                        required
+                    ><%= recipe.ingredients || '' %></textarea>
+                </div>
+
+                <!-- instructions -->
+                <div class="form-object">
+                    <textarea
+                        name="instructions"
+                        required
+                    ><%= recipe.instructions || '' %></textarea>
+                </div>
+
+                <!-- tags -->
+                <div class="form-object">
+                    <input
+                        type="text"
+                        name="tags"
+                        value="<%= recipe.tags || '' %>"
+                        placeholder="Tags (comma-separated)"
+                    >
+                </div>
+
+                <!-- diet preference -->
+                <div class="form-object">
+                    <input
+                        type="text"
+                        name="diet"
+                        value="<%= recipe.diet || '' %>"
+                        placeholder="Dietary preference"
+                    >
+                </div>
+
+                <!-- cook time -->
+                <div class="form-object">
+                    <input
+                        type="number"
+                        name="cook_time"
+                        min="0"
+                        value="<%= recipe.cook_time || '' %>"
+                        placeholder="Cooking time (minutes)"
+                    >
+                </div>
+
+                <!-- difficulty -->
+                <div class="form-object">
+                    <select name="difficulty">
+                        <option value="">Select difficulty</option>
+                        <option value="Easy"   <%= recipe.difficulty === 'Easy'   ? 'selected' : '' %>>Easy</option>
+                        <option value="Medium" <%= recipe.difficulty === 'Medium' ? 'selected' : '' %>>Medium</option>
+                        <option value="Hard"   <%= recipe.difficulty === 'Hard'   ? 'selected' : '' %>>Hard</option>
+                    </select>
+                </div>
+
+                <!-- image url -->
+                <div class="form-object">
+                    <input
+                        type="url"
+                        name="img"
+                        value="<%= recipe.img || '' %>"
+                        placeholder="Image URL"
+                    >
+                </div>
+
+                <!-- submit -->
+                <div class="form-object">
+                    <input type="submit" value="Save Changes">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<%- include("partials/footer.ejs") %>
