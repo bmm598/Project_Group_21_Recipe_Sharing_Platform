@@ -16,7 +16,7 @@
         <!-- for each recipe in recipes create this object -->
         <% user_recipes.forEach(recipe => { %>
             <div class="recipe-object">
-                <a href="http://localhost:3000/<%= recipe.recipe_id %>/recipe">
+                <a href="<%= __dirname %><%= recipe.recipe_id %>/recipe">
                 <div class="recipe-split">
                     <div class="recipe-img">
                         <img src="<%= recipe.img %>" alt="Image of <%= recipe.title %>">
@@ -43,12 +43,12 @@
                         <% if(locals.loggedIn == true) { %>
                             <% if(locals.user[0].creator_id == recipe.creator_user_id) { %>
                             <div class="edit-object">
-                                <form id="delete-form" action="http://localhost:3000/<%= recipe.recipe_id %>/delete" method="POST">
+                                <form id="delete-form" action="<%= __dirname %><%= recipe.recipe_id %>/delete" method="POST">
                                     <div class="form-object">
                                         <input type="submit" value="Delete">
                                     </div>
                                 </form>
-                                <form id="edit-form" action="http://localhost:3000/<%= recipe.recipe_id %>/edit" method="GET">
+                                <form id="edit-form" action="<%= __dirname %><%= recipe.recipe_id %>/edit" method="GET">
                                     <div class="form-object">
                                         <input type="submit" value="Edit">
                                     </div>
