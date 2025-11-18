@@ -1,29 +1,34 @@
-<%- include("partials/header.ejs") %>
+<%- include("../partials/header.ejs") %>
+
+<!-- search box -->
+<div class="search-bar-container">
+        <form action="/" method="GET" id="search-form">
+            <div class="search-bar-object">
+                <input
+                    type="search"
+                    name="q"
+                    placeholder="Search recipes by title, description, or tags"
+                    value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>"
+                >
+                <button type="submit">Search</button>
+            </div>
+        </form>
+</div>
 
 <!-- if recipes list exists -->
-<% if (locals.recipes) { %>
+<% if (locals.user_recipes) { %>
     <div class="recipe-container">
         <!-- for each recipe in recipes create this object -->
-        <% recipes.forEach(recipe => { %>
+        <% user_recipes.forEach(recipe => { %>
             <div class="recipe-object">
-                    <%= recipe.date_created %> 
-                <h3> 
-                    <%= recipe.title %> 
-                </h3>
-                <p> 
-                    by: <%= recipe.creator_name %> 
-                </p>
-                <img src="<%= recipe.img %>" alt="Image of <%= recipe.title %>">
-                <p> 
-                    <%= recipe.body %> 
-                </p>
-                <!-- if the current user is the owner of this post, then show edit and delete -->
-                <% if(locals.loggedIn == true) { %>
-                    <% if(locals.user[0].creator_id == recipe.creator_user_id) { %>
-                    <div class="edit-object">
-                        <form id="delete-form" action="<%= recipe.recipe_id %>/delete" method="POST">
-                            <div class="form-object">
-                                <input type="submit" value="Delete">
+                <a href="<%= __dirname %><%= recipe.recipe_id %>/recipe">
+                    <div class="recipe-split">
+                        <div class="recipe-img">
+                            <img src="<%= recipe.img %>" alt="Image of <%= recipe.title %>">
+                        </div>
+                        <div class="recipe-description">
+                            <div>
+                                <%= recipe.date_created %> 
                             </div>
                             <h3> 
                                 <%= recipe.title %> 
@@ -79,34 +84,4 @@
     </div>
 <% } %>
 
-<!-- if user is logged in then allow them to draft a recipe post -->
-<% if(locals.loggedIn == true) { %>
-<div class="body-container">
-        <div class="body-object">
-            <h2>Draft a Recipe Post</h2>
-        </div>
-        <div class="body-object">
-            <form id="recipe-form" action="/submit" method="POST">
-                <div class="form-container">
-                    <div class="form-object">
-                        <input type="text" name="title" placeholder="Title*" required>
-                    </div>
-                    <div class="form-object">
-                        <p> 
-                            by: <%= user[0].name %> 
-                        </p>
-                    </div>
-                    <div class="form-object">
-                        <textarea  name="content" placeholder="Content*" required></textarea>
-                    </div>
-                    <div class="form-object">
-                        <input type="submit" value="Submit">
-                    </div>
-                    <!-- image upload -->
-                </div>
-            </form>
-        </div>
-</div>
-<% } %>
-
-<%- include("partials/footer.ejs") %>
+<%- include("../partials/footer.ejs") %>

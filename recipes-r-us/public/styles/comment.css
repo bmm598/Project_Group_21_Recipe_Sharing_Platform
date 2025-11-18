@@ -1,0 +1,21 @@
+.comment-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center; 
+    gap: 25px;
+    margin: auto;
+    width: 50%;
+}
+
+.comment-object {
+    display: flex;
+    flex-direction: column;
+    color: black;
+    padding: 15px;
+    width: 100%;
+    box-shadow: 0 0 5px gray;
+    background-color: white;
+    border-radius: 10px;
+}

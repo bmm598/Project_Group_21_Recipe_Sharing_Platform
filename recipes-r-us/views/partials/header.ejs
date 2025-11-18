@@ -7,12 +7,13 @@
     <link rel="stylesheet" href="/styles/header.css">
     <link rel="stylesheet" href="/styles/footer.css">
     <link rel="stylesheet" href="/styles/recipes.css">
+    <link rel="stylesheet" href="/styles/comment.css">
     <title>Recipe's R Us</title>
 </head>
 <header>
     <div class="header-container">
         <div class="header-object">
-            <a href="./"><h1>Recipe's R Us</h1></a>
+            <a href="<%= __dirname %>"><h1>Recipe's R Us</h1></a>
         </div>
         <div class="header-object">
             <h3>Recipe Sharing Platform</h3>
@@ -20,12 +21,23 @@
         <% if(locals.loggedIn == true) { %>
             <div class="header-object">
                 <h3>Hello, <%= user[0].name %></h3>
-                <a href="./accountcenter" ><img src="/images/icons/user.png" alt="account icon"></a>
-                <form id="sign-out" action="/signout" method="post">
-                    <div class="form-object">
-                        <input type="submit" value="Sign Out">
+                <div class="dropdown">
+                    <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter" ><img src="/images/icons/user.png" alt="account icon" class="dropbtn"></a>
+                    <div class="dropdown-content">
+                        <div class="inner-dropdown">
+                            <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter">Account Center</a>
+                            <div class="inner-dropdown-content">
+                                <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter/recipes">Your Recipes</a>
+                                <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter/collections">Collections</a>
+                                <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter/favorites">Favorite Recipes</a>
+                            </div>
+                        </div>
+                        <!-- <a href="#">Link 2</a> -->
+                        <form id="sign-out" action="/signout" method="post">
+                            <input type="submit" value="Sign Out">
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
         <% } else { %>
             <div class="header-object">

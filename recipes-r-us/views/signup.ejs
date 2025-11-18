@@ -1,12 +1,20 @@
-<%- include("partials/header.ejs") %>
+<%- include("partials/sign-header.ejs") %>
 
-    <div class="body-container">
-        <div class="body-object">
-            <h2>Sign Up</h2>
-        </div>
-        <div class="body-object">
+    <div class="sign-container">
+        <div class="sign-object">
             <form id="sign-up-form" action="/signup" method="POST">
                 <div class="form-container">
+                    <div class="close">
+                        <a href="../">
+                            <span>&times;</span>
+                        </a>
+                    </div>
+                    <div class="form-object">
+                        <div class="view-recipe-img">
+                            <img src="/images/icons/user.png" alt="Image of">
+                        </div>
+                    </div>
+                    <h2>Sign Up</h2>
                     <div class="form-object">
                         <input type="text" name="name" placeholder="Full Name*" required>
                     </div>
@@ -23,10 +31,12 @@
             </form>
         </div>
         <% if (locals.response) { %>
-            <div class="body-object">
+            <div class="sign-object">
                 <h4><%= response %></h4>
             </div>
         <% } %>
     </div>
+</body>
+</html>
 
-<%- include("partials/footer.ejs") %>
+<%- //include("partials/footer.ejs") %>
