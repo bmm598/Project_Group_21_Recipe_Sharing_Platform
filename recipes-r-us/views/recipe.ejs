@@ -25,7 +25,7 @@
         <span class="star <%= recipe.avg_rating == 5? "checked" : null %>">&#9733;</span>
     </div>
     <p>
-        <%= recipe.avg_rating %> average based on <%= recipe.total_ratings %> reviews. 
+        <%= recipe.avg_rating %> average based on <%= recipe.total_ratings? recipe.total_ratings : 0 %> reviews. 
     </p>
 </div>
 

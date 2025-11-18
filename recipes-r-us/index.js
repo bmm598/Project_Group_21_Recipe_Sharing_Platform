@@ -104,14 +104,10 @@ app.get("/", async (req, res) => {
     const selectedTag = req.query.tag || '';
 
     try {
-        const recipesList = await getRecipes(searchQuery);
-
-        console.log(recipesList);
-
+        const recipesList = await getRecipes(searchQuery, selectedTag);
         res.render("index.ejs", {
             __dirname,
-            //recipes: recipesList,
-            recipes,
+            recipes: recipesList,
             user,
             loggedIn,
             searchQuery,                     // pass to ejs to keep the input filled

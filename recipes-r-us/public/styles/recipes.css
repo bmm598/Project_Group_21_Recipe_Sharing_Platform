@@ -24,11 +24,11 @@
 }
 
 .recipe-img { 
-    height: 260px;
+    height: 280px;
 }
 
 .recipe-img img {
-    height: 260px;
+    height: 280px;
     width: 250px;
     object-fit: cover;
     object-position: center;
@@ -45,7 +45,7 @@
     padding: 15px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
-    height: 230px;
+    height: 250px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
