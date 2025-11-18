@@ -1,33 +1,18 @@
 <%- include("partials/header.ejs") %>
 
-<<<<<<< HEAD
 <!-- search box -->
-<div class="body-container">
-    <div class="body-object">
-        <form action="/" method="GET" id="search-form" class="form-container">
-            <div class="form-object">
+<div class="search-bar-container">
+        <form action="/" method="GET" id="search-form">
+            <div class="search-bar-object">
                 <input
-                    type="text"
+                    type="search"
                     name="q"
                     placeholder="Search recipes by title, description, or tags"
                     value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>"
                 >
-            </div>
-            <div class="form-object">
-                <input type="submit" value="Search">
+                <button type="submit">Search</button>
             </div>
         </form>
-    </div>
-=======
-<div class="search-bar-container">
-    <form action="/search" method="post">   
-        <div class="search-bar-object">
-            <label for="search-input">Search:</label>
-            <input type="search" id="search-input" name="q" placeholder="Enter your search term..." />
-            <button type="submit">Search</button>
-        </div>
-    </form>
->>>>>>> ecd7c655409d54854f905d5c60c574ad049c1e40
 </div>
 
 <!-- if recipes list exists -->
@@ -36,49 +21,6 @@
         <!-- for each recipe in recipes create this object -->
         <% recipes.forEach(recipe => { %>
             <div class="recipe-object">
-                    <%= recipe.date_created %> 
-                <h3> 
-                    <%= recipe.title %> 
-                </h3>
-                <p> 
-                    by: <%= recipe.creator_name %> 
-                </p>
-                <img src="<%= recipe.img %>" alt="Image of <%= recipe.title %>">
-                <p> 
-                    <%= recipe.body %> 
-                </p>
-
-                <!-- tags block -->
-                <% if (recipe.tags) { %>
-                    <div class="tag-container">
-                        <% recipe.tags.split(",").forEach((tagRaw) => { 
-                            const t = tagRaw.trim();
-                            if (t.length === 0) return;
-                        %>
-                            <a
-                                class="tag-badge"
-                                href="/?tag=<%= encodeURIComponent(t) %><%= (typeof searchQuery !== 'undefined' && searchQuery.trim() !== '') ? '&q=' + encodeURIComponent(searchQuery) : '' %>"
-                            >
-                                <%= t %>
-                            </a>
-                        <% }) %>
-                    </div>
-                <% } %>
-
-                <!-- if the current user is the owner of this post, then show edit and delete -->
-                <% if(locals.loggedIn == true) { %>
-                    <% if(locals.user[0].creator_id == recipe.creator_user_id) { %>
-                    <div class="edit-object">
-                        <form id="delete-form" action="<%= recipe.recipe_id %>/delete" method="POST">
-                            <div class="form-object">
-                                <input type="submit" value="Delete">
-                            </div>
-                        </form>
-                        <form id="edit-form" action="<%= recipe.recipe_id %>/edit" method="GET">
-                            <div class="form-object">
-                                <input type="submit" value="Edit">
-                            </div>
-                        </form>
                 <a href="<%= recipe.recipe_id %>/recipe">
                 <div class="recipe-split">
                     <div class="recipe-img">
@@ -102,6 +44,22 @@
                         <p>
                             <%= recipe.body %> 
                         </p>
+                        <!-- tags block -->
+                        <% if (recipe.tags) { %>
+                            <div class="tag-container">
+                                <% recipe.tags.split(",").forEach((tagRaw) => { 
+                                    const t = tagRaw.trim();
+                                    if (t.length === 0) return;
+                                %>
+                                    <a
+                                        class="tag-badge"
+                                        href="/?tag=<%= encodeURIComponent(t) %><%= (typeof searchQuery !== 'undefined' && searchQuery.trim() !== '') ? '&q=' + encodeURIComponent(searchQuery) : '' %>"
+                                    >
+                                        <%= t %>
+                                    </a>
+                                <% }) %>
+                            </div>
+                        <% } %>
                         <!-- if the current user is the owner of this post, then show edit and delete -->
                         <% if(locals.loggedIn == true) { %>
                             <% if(locals.user[0].creator_id == recipe.creator_user_id) { %>

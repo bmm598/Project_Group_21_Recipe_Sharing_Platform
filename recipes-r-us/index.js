@@ -19,7 +19,7 @@ const db = new pg.Client({
     user: "postgres",              // default
     host: "localhost",
     database: "recipes_r_us",      // database
-    password: "",
+    password: "supergoodpassword",
     port: 5432,
 });
 
@@ -103,10 +103,11 @@ app.get("/", async (req, res) => {
     const selectedTag = req.query.tag || '';
 
     try {
-        const recipesList = await getRecipes(searchQuery);
+        //const recipesList = await getRecipes(searchQuery);
         res.render("index.ejs", {
             __dirname,
-            recipes: recipesList,
+            //recipes: recipesList,
+            recipes,
             user,
             loggedIn,
             searchQuery,                     // pass to ejs to keep the input filled

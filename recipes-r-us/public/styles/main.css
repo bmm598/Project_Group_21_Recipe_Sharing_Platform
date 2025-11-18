@@ -38,6 +38,10 @@ body {
     box-sizing: border-box;
 }
 
+.search-bar-object input {
+    width: 300px;
+}
+
 .form-container {
     margin: auto;
     display: flex;
