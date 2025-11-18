@@ -9,66 +9,10 @@ const app = express();
 const port = 3000;
 
 // db connect
-const db = new pg.Client({
-    user: "postgres",              // default
-    host: "localhost",
-    database: "recipes_r_us",      // database
-    password: "",
-    port: 5432,
-});
 
-db.connect()
-    .then(() => console.log("Connected to Postgres"))
-    .catch((err) => console.error("DB connection error:", err.stack));
-
-// helper functions
-async function getRecipes(searchQuery, tagFilter) {
-    let query = `
-        SELECT
-            r.recipe_id,
-            r.title,
-            r.body,
-            r.img,
-            r.ingredients,
-            r.instructions,
-            r.tags,
-            r.diet,
-            r.cook_time,
-            r.difficulty,
-            r.creator_user_id,
-            TO_CHAR(r.date_created, 'MM-DD-YYYY') AS date_created,
-            u.name AS creator_name
-        FROM recipes r
-        LEFT JOIN users u ON r.creator_user_id = u.creator_id
-    `;
-
-    const conditions = [];
-    const params = [];
-
-    // search filter
-    if (searchQuery && searchQuery.trim() !== "") {
-        conditions.push(`
-            (LOWER(r.title) LIKE $${params.length + 1}
-            OR LOWER(r.body) LIKE $${params.length + 1}
-            OR LOWER(r.tags) LIKE $${params.length + 1})
-        `);
-        params.push(`%${searchQuery.toLowerCase()}%`);
-    }
-
-    // tag filter
-    if (tagFilter && tagFilter.trim() !== "") {
-        conditions.push(`LOWER(r.tags) LIKE $${params.length + 1}`);
-        params.push(`%${tagFilter.toLowerCase()}%`);
-    }
-
-    if (conditions.length > 0) {
-        query += " WHERE " + conditions.join(" AND ");
-    }
-
-    query += " ORDER BY r.date_created DESC";
-
-    const result = await db.query(query, params);
-    return result.rows;
+//helper functions
+function getRecipes(searchQuery) { 
+    return null;
 }
 
 // helper function to convert names to uppercase for first letters
@@ -110,26 +54,15 @@ let loggedIn = true;
 
 //requests
 
-// get home page (updated with search & tags)
-app.get("/", async (req, res) => {
-    const searchQuery = req.query.q || "";   // q comes from the search form
-    const selectedTag = req.query.tag || '';
-
-    try {
-        const recipesList = await getRecipes(searchQuery);
-        res.render("index.ejs", {
-            recipes: recipesList,
-            user,
-            loggedIn,
-            searchQuery,                     // pass to ejs to keep the input filled
-            selectedTag,
-        });
-    } catch (error) {
-        console.error("Error loading recipes:", error.stack);
-        res.status(500).send("Error loading recipes");
-    }
-});
-
+// get home page
+app.get("/", (req, res) => { 
+    // render home page with recipes, user, and loggedin boolean
+    res.render("index.ejs", {
+        recipes,
+        user, 
+        loggedIn,
+    });
+})
 
 app.get("/accountcenter", (req, res) => {
     // render the account center page
@@ -253,61 +186,6 @@ app.post("/signout", (req, res) => {
     res.redirect("/");
 });
 
-// submit a new recipe
-app.post("/submit", async (req, res) => {
-    // make sure someone is logged in
-    if (!loggedIn || !user[0]) {
-        return res.redirect("/signin");
-    }
-
-    const creatorUserId = user[0].creator_id;
-    const creatorName   = user[0].name;
-
-    const {
-        title,
-        content,
-        ingredients,
-        instructions,
-        tags,
-        diet,
-        cook_time,
-        difficulty,
-        img
-    } = req.body;
-
-    try {
-        await db.query(
-            `
-            INSERT INTO recipes
-                (title, body, img, ingredients, instructions,
-                 tags, diet, cook_time, difficulty,
-                 creator_user_id)
-            VALUES
-                ($1,   $2,   $3,  $4,          $5,
-                 $6,  $7,   $8,    $9,
-                 $10)
-            `,
-            [
-                title,
-                content,
-                img || null,
-                ingredients || null,
-                instructions || null,
-                tags || null,
-                diet || null,
-                cook_time ? parseInt(cook_time) : null,
-                difficulty || null,
-                creatorUserId
-            ]
-        );
-
-        res.redirect("/");
-    } catch (error) {
-        console.error("Error inserting recipe:", error.stack);
-        res.status(500).send("Error creating recipe");
-    }
-});
-
 // recipe edit route, ownership check
 app.get("/:id/edit", async (req, res) => {
     const recipe_id = req.params.id;
@@ -341,83 +219,6 @@ app.get("/:id/edit", async (req, res) => {
         res.status(500).send('Error loading recipe');
     }
 });
-
-// edit recipe with ownership check
-app.post("/:id/edit", async (req, res) => {
-    const recipe_id = req.params.id;
-
-    if (!loggedIn || !user[0]) {
-        return res.redirect("/signin");
-    }
-
-    const user_id = user[0].creator_id;
-
-    const {
-        title,
-        content,
-        ingredients,
-        instructions,
-        tags,
-        diet,
-        cook_time,
-        difficulty,
-        img
-    } = req.body;
-
-    try {
-        // ownership check
-        const checkResult = await db.query(
-            "SELECT creator_user_id FROM recipes WHERE recipe_id = $1",
-            [recipe_id]
-        );
-
-        if (checkResult.rows.length === 0) {
-            return res.status(404).send("Recipe not found");
-        }
-
-        const recipe = checkResult.rows[0];
-        if (recipe.creator_user_id !== user_id) {
-            return res.status(403).send("You do not have permission to edit this recipe");
-        }
-
-        // perform the update
-        await db.query(
-            `
-            UPDATE recipes
-            SET
-                title = $1,
-                body = $2,
-                img = $3,
-                ingredients = $4,
-                instructions = $5,
-                tags = $6,
-                diet = $7,
-                cook_time = $8,
-                difficulty = $9
-            WHERE recipe_id = $10
-            `,
-            [
-                title,
-                content,
-                img || null,
-                ingredients || null,
-                instructions || null,
-                tags || null,
-                diet || null,
-                cook_time ? parseInt(cook_time) : null,
-                difficulty || null,
-                recipe_id
-            ]
-        );
-
-        res.redirect("/");
-    } catch (error) {
-        console.error("Recipe update error:", error.stack);
-        res.status(500).send("Error updating recipe");
-    }
-});
-
-
 
 //recipe delete, ownership check
 app.post("/:id/delete", async (req, res) => {
