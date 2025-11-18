@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import pg from "pg";
 // import { dirname } from "path";
 // import { fileURLToPath } from "url";
-import recipes from "./recipes.js";
+//import recipes from "./recipes.js";
 import { toTitleCase, readApostraphe } from "./helper.js";
 
 // dirname, app, port
@@ -43,7 +43,9 @@ async function getRecipes(searchQuery, tagFilter) {
             r.difficulty,
             r.creator_user_id,
             TO_CHAR(r.date_created, 'MM-DD-YYYY') AS date_created,
-            u.name AS creator_name
+            u.name AS creator_name,
+            r.avg_rating,
+            r.total_ratings
         FROM recipes r
         LEFT JOIN users u ON r.creator_user_id = u.creator_id
     `;
@@ -78,8 +80,7 @@ async function getRecipes(searchQuery, tagFilter) {
 }
 
 // get initial recipes repo
-//let recipes = [];
-//updateRecipes();
+let recipes = await getRecipes("");
 
 // middleware
 app.use(express.static("public"));
@@ -89,7 +90,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 let user = [{
     name: "user",
     creator_name: "example name",
-    creator_id: 5,
+    creator_id: 1,
 }];
 
 // logged in boolean
@@ -103,7 +104,10 @@ app.get("/", async (req, res) => {
     const selectedTag = req.query.tag || '';
 
     try {
-        //const recipesList = await getRecipes(searchQuery);
+        const recipesList = await getRecipes(searchQuery);
+
+        console.log(recipesList);
+
         res.render("index.ejs", {
             __dirname,
             //recipes: recipesList,

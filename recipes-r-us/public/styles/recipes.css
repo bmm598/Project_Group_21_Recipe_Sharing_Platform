@@ -71,7 +71,6 @@
     border-radius: 10px;
 }
 
-<<<<<<< HEAD
 .tag-container {
     margin-top: 8px;
 }
@@ -90,8 +89,9 @@
 
 .tag-badge:hover {
     background-color: #e0e0e0;
-=======
+}
 /* styling for star rating */
+
 .star-rating {
     display: inline-block;
     font-size: 1.5em;
@@ -100,5 +100,4 @@
 
 .checked {
     color: gold; 
->>>>>>> ecd7c655409d54854f905d5c60c574ad049c1e40
 }
