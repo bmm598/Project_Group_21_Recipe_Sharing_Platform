@@ -1,34 +1,29 @@
 <%- include("partials/header.ejs") %>
 
-<!-- search box -->
-<div class="search-bar-container">
-        <form action="/" method="GET" id="search-form">
-            <div class="search-bar-object">
-                <input
-                    type="search"
-                    name="q"
-                    placeholder="Search recipes by title, description, or tags"
-                    value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>"
-                >
-                <button type="submit">Search</button>
-            </div>
-        </form>
-</div>
-
 <!-- if recipes list exists -->
 <% if (locals.recipes) { %>
     <div class="recipe-container">
         <!-- for each recipe in recipes create this object -->
         <% recipes.forEach(recipe => { %>
             <div class="recipe-object">
-                <a href="<%= recipe.recipe_id %>/recipe">
-                    <div class="recipe-split">
-                        <div class="recipe-img">
-                            <img src="<%= recipe.img %>" alt="Image of <%= recipe.title %>">
-                        </div>
-                        <div class="recipe-description">
-                            <div>
-                                <%= recipe.date_created %> 
+                    <%= recipe.date_created %> 
+                <h3> 
+                    <%= recipe.title %> 
+                </h3>
+                <p> 
+                    by: <%= recipe.creator_name %> 
+                </p>
+                <img src="<%= recipe.img %>" alt="Image of <%= recipe.title %>">
+                <p> 
+                    <%= recipe.body %> 
+                </p>
+                <!-- if the current user is the owner of this post, then show edit and delete -->
+                <% if(locals.loggedIn == true) { %>
+                    <% if(locals.user[0].creator_id == recipe.creator_user_id) { %>
+                    <div class="edit-object">
+                        <form id="delete-form" action="<%= recipe.recipe_id %>/delete" method="POST">
+                            <div class="form-object">
+                                <input type="submit" value="Delete">
                             </div>
                             <h3> 
                                 <%= recipe.title %> 
@@ -93,101 +88,21 @@
         <div class="body-object">
             <form id="recipe-form" action="/submit" method="POST">
                 <div class="form-container">
-                    <!-- title -->
                     <div class="form-object">
-                        <input
-                            type="text"
-                            name="title"
-                            placeholder="Recipe Title*"
-                            required
-                        >
+                        <input type="text" name="title" placeholder="Title*" required>
                     </div>
-
-                    <!-- creator -->
                     <div class="form-object">
-                        <p>
-                            by: <%= user[0].name %>
+                        <p> 
+                            by: <%= user[0].name %> 
                         </p>
                     </div>
-
-                    <!-- description -->
                     <div class="form-object">
-                        <textarea
-                            name="content"
-                            placeholder="Short description or notes about the recipe*"
-                            required
-                        ></textarea>
+                        <textarea  name="content" placeholder="Content*" required></textarea>
                     </div>
-
-                    <!-- ingredients -->
                     <div class="form-object">
-                        <textarea
-                            name="ingredients"
-                            placeholder="Ingredients* (one per line)"
-                            required
-                        ></textarea>
+                        <input type="submit" value="Submit">
                     </div>
-
-                    <!-- instructions -->
-                    <div class="form-object">
-                        <textarea
-                            name="instructions"
-                            placeholder="Instructions*"
-                            required
-                        ></textarea>
-                    </div>
-
-                    <!-- tags & badges -->
-                    <div class="form-object">
-                        <input
-                            type="text"
-                            name="tags"
-                            placeholder="Tags (comma-separated, e.g. vegan, breakfast, spicy)"
-                        >
-                    </div>
-
-                    <!-- diet preference -->
-                    <div class="form-object">
-                        <input
-                            type="text"
-                            name="diet"
-                            placeholder="Dietary preference (e.g. Vegan, Gluten-free)"
-                        >
-                    </div>
-
-                    <!-- cook time -->
-                    <div class="form-object">
-                        <input
-                            type="number"
-                            name="cook_time"
-                            min="0"
-                            placeholder="Cooking time (minutes)"
-                        >
-                    </div>
-
-                    <!-- difficulty -->
-                    <div class="form-object">
-                        <select name="difficulty">
-                            <option value="">Select difficulty</option>
-                            <option value="Easy">Easy</option>
-                            <option value="Medium">Medium</option>
-                            <option value="Hard">Hard</option>
-                        </select>
-                    </div>
-
-                    <!-- image url -->
-                    <div class="form-object">
-                        <input
-                            type="url"
-                            name="img"
-                            placeholder="Image URL (optional)"
-                        >
-                    </div>
-
-                    <!-- submit -->
-                    <div class="form-object">
-                        <input type="submit" value="Submit Recipe">
-                    </div>
+                    <!-- image upload -->
                 </div>
             </form>
         </div>
