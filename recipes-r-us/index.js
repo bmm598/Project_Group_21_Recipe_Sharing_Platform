@@ -356,7 +356,7 @@ app.get("/:id/edit", async (req, res) => {
         }
         
         // if user owns the recipe, render edit page (for future use)
-        res.render("edit-recipe.ejs", { recipe, user, loggedIn });
+        res.render("edit-recipe.ejs", { recipe, user, loggedIn, __dirname });
         
     } catch (error) {
         console.error("Recipe edit error:", error.stack);
