@@ -1,5 +1,6 @@
 <%- include("partials/header.ejs") %>
 
+<<<<<<< HEAD
 <!-- search box -->
 <div class="body-container">
     <div class="body-object">
@@ -17,6 +18,16 @@
             </div>
         </form>
     </div>
+=======
+<div class="search-bar-container">
+    <form action="/search" method="post">   
+        <div class="search-bar-object">
+            <label for="search-input">Search:</label>
+            <input type="search" id="search-input" name="q" placeholder="Enter your search term..." />
+            <button type="submit">Search</button>
+        </div>
+    </form>
+>>>>>>> ecd7c655409d54854f905d5c60c574ad049c1e40
 </div>
 
 <!-- if recipes list exists -->
@@ -68,9 +79,49 @@
                                 <input type="submit" value="Edit">
                             </div>
                         </form>
+                <a href="<%= recipe.recipe_id %>/recipe">
+                <div class="recipe-split">
+                    <div class="recipe-img">
+                        <img src="<%= recipe.img %>" alt="Image of <%= recipe.title %>">
                     </div>
-                    <% } %>
-                <% } %>
+                    <div class="recipe-description">
+                        <div>
+                            <%= recipe.date_created %> 
+                        </div>
+                        <h3> 
+                            <%= recipe.title %> 
+                        </h3>
+                        <div>by: <%= recipe.creator_name %> </div>
+                        <div class="star-rating" id="starRating">
+                            <span class="star <%= recipe.avg_rating > 1? "checked" : null %>">&#9733;</span>
+                            <span class="star <%= recipe.avg_rating > 2? "checked" : null %>">&#9733;</span>
+                            <span class="star <%= recipe.avg_rating > 3? "checked" : null %>">&#9733;</span>
+                            <span class="star <%= recipe.avg_rating > 4? "checked" : null %>">&#9733;</span>
+                            <span class="star <%= recipe.avg_rating == 5? "checked" : null %>">&#9733;</span>
+                        </div>
+                        <p>
+                            <%= recipe.body %> 
+                        </p>
+                        <!-- if the current user is the owner of this post, then show edit and delete -->
+                        <% if(locals.loggedIn == true) { %>
+                            <% if(locals.user[0].creator_id == recipe.creator_user_id) { %>
+                            <div class="edit-object">
+                                <form id="delete-form" action="<%= recipe.recipe_id %>/delete" method="POST">
+                                    <div class="form-object">
+                                        <input type="submit" value="Delete">
+                                    </div>
+                                </form>
+                                <form id="edit-form" action="<%= recipe.recipe_id %>/edit" method="GET">
+                                    <div class="form-object">
+                                        <input type="submit" value="Edit">
+                                    </div>
+                                </form>
+                            </div>
+                            <% } %>
+                        <% } %>
+                    </div>
+                </div>
+                </a>
             </div>
         <% }); %>
     </div>

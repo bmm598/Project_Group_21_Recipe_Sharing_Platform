@@ -2,11 +2,17 @@ import express from "express";
 import bodyParser from "body-parser";
 import bcrypt from "bcrypt";
 import pg from "pg";
+// import { dirname } from "path";
+// import { fileURLToPath } from "url";
 import recipes from "./recipes.js";
+import { toTitleCase, readApostraphe } from "./helper.js";
 
 // dirname, app, port
 const app = express();
 const port = 3000;
+// temporary directory name
+const __dirname = "http://localhost:3000/";
+//const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // db connect
 const db = new pg.Client({
@@ -71,26 +77,6 @@ async function getRecipes(searchQuery, tagFilter) {
     return result.rows;
 }
 
-// helper function to convert names to uppercase for first letters
-function toTitleCase(str) {
-    return str
-        // split string by spaces
-        .split(' ')
-        // for each word in array from split, uppercase the first letter and lowercase the rest.
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-        // join each word with a space in between
-        .join(' ');
-}
-
-// helper function to convert ' in body to '' so it is read correctly in postgres
-function readApostraphe(str) {
-    return str
-        // split string by apostrophe
-        .split("\'")
-        // join each word with a double apostrophe in between
-        .join("\'\'");
-}
-
 // get initial recipes repo
 //let recipes = [];
 //updateRecipes();
@@ -101,8 +87,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // declare global current user
 let user = [{
-    name: "example name",
-    creator_id: 1,
+    name: "user",
+    creator_name: "example name",
+    creator_id: 5,
 }];
 
 // logged in boolean
@@ -118,6 +105,7 @@ app.get("/", async (req, res) => {
     try {
         const recipesList = await getRecipes(searchQuery);
         res.render("index.ejs", {
+            __dirname,
             recipes: recipesList,
             user,
             loggedIn,
@@ -131,10 +119,43 @@ app.get("/", async (req, res) => {
 });
 
 
-app.get("/accountcenter", (req, res) => {
+app.get("/:id/accountcenter", (req, res) => {
+    const account_id = req.params.id;
     // render the account center page
     res.render("accountcenter.ejs", {
+        __dirname,
         user,
+        loggedIn,
+    })
+})
+
+app.get("/:id/accountcenter/recipes", (req, res) => {
+    const account_id = req.params.id;
+    const user_recipes = recipes.filter(recipe => recipe.creator_user_id == account_id);
+
+    res.render("user/user-recipes.ejs", {
+        __dirname,
+        user,
+        loggedIn,
+        user_recipes,
+    })
+})
+
+// post request to use search query
+app.post("/search", (req, res) => {
+    console.log(req.body.q);
+    //getRecipes(req.body.q);
+    res.redirect("/");
+})
+
+app.get("/:id/recipe", (req, res) => {
+    const recipe_id = req.params.id;
+    const recipe = recipes.find(item => item.recipe_id == recipe_id);
+
+    res.render("recipe.ejs", {
+        __dirname,
+        recipe,
+        user, 
         loggedIn,
     })
 })

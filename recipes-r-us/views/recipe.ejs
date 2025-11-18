@@ -1,0 +1,50 @@
+<%- include("partials/header.ejs") %>
+
+<div class="body-container">
+    <div class="body-object">
+        <h1><%= recipe.title %></h1>
+    </div>
+    <div class="view-recipe-img">
+        <img src="<%= recipe.img %>" alt="Image of <%= recipe.title %>">
+    </div>
+    <p>
+        <%= recipe.date_created %> 
+    </p>
+    <p>
+        by: <%= recipe.creator_name %>
+    </p>
+    <p class="body-object">
+        <%= recipe.body %>
+    </p>
+
+    <div class="star-rating" id="starRating">
+        <span class="star <%= recipe.avg_rating > 1? "checked" : null %>">&#9733;</span>
+        <span class="star <%= recipe.avg_rating > 2? "checked" : null %>">&#9733;</span>
+        <span class="star <%= recipe.avg_rating > 3? "checked" : null %>">&#9733;</span>
+        <span class="star <%= recipe.avg_rating > 4? "checked" : null %>">&#9733;</span>
+        <span class="star <%= recipe.avg_rating == 5? "checked" : null %>">&#9733;</span>
+    </div>
+    <p>
+        <%= recipe.avg_rating %> average based on <%= recipe.total_ratings %> reviews. 
+    </p>
+</div>
+
+<comment>
+    <div class="comment-container">
+        <% recipe.comments.forEach(comment => { %>
+            <div class="comment-object">
+                <div>
+                    <%= comment.date_created %> 
+                </div>
+                <p>
+                    by: <%= comment.commenter_name %>
+                </p>
+                <p>
+                    <%= comment.comment %>
+                </p>
+            </div>
+        <% }) %>
+    </div>
+</comment>
+
+<%- include("partials/footer.ejs") %>
