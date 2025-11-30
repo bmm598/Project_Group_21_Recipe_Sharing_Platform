@@ -84,34 +84,4 @@
     </div>
 <% } %>
 
-<!-- if user is logged in then allow them to draft a recipe post -->
-<% if(locals.loggedIn == true) { %>
-<div class="body-container">
-        <div class="body-object">
-            <h2>Draft a Recipe Post</h2>
-        </div>
-        <div class="body-object">
-            <form id="recipe-form" action="/submit" method="POST">
-                <div class="form-container">
-                    <div class="form-object">
-                        <input type="text" name="title" placeholder="Title*" required>
-                    </div>
-                    <div class="form-object">
-                        <p> 
-                            by: <%= user[0].name %> 
-                        </p>
-                    </div>
-                    <div class="form-object">
-                        <textarea  name="content" placeholder="Content*" required></textarea>
-                    </div>
-                    <div class="form-object">
-                        <input type="submit" value="Submit">
-                    </div>
-                    <!-- image upload -->
-                </div>
-            </form>
-        </div>
-</div>
-<% } %>
-
 <%- include("partials/footer.ejs") %>

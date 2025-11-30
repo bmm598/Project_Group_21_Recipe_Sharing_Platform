@@ -1,0 +1,110 @@
+<%- include("partials/header.ejs") %>
+
+<div class="body-container">
+    <div class="body-object">
+            <form id="recipe-form" action="/submit" method="POST">
+                <div class="form-container">
+                    <!-- title -->
+                    <div class="form-object">
+                        <input
+                            type="text"
+                            name="title"
+                            placeholder="Recipe Title*"
+                            required
+                        >
+                    </div>
+
+                    <!-- creator -->
+                    <div class="form-object">
+                        <p>
+                            by: <%= user[0].name %>
+                        </p>
+                    </div>
+
+                    <!-- description -->
+                    <div class="form-object">
+                        <textarea
+                            name="content"
+                            placeholder="Short description or notes about the recipe*"
+                            required
+                        ></textarea>
+                    </div>
+
+                    <!-- ingredients -->
+                    <div class="form-object">
+                        <textarea
+                            name="ingredients"
+                            placeholder="Ingredients* (one per line)"
+                            required
+                        ></textarea>
+                    </div>
+
+                    <!-- instructions -->
+                    <div class="form-object">
+                        <textarea
+                            name="instructions"
+                            placeholder="Instructions*"
+                            required
+                        ></textarea>
+                        <textarea  name="content" placeholder="Content*" required></textarea>
+                    </div>
+
+                    <!-- tags & badges -->
+                    <div class="form-object">
+                        <input
+                            type="text"
+                            name="tags"
+                            placeholder="Tags (comma-separated, e.g. vegan, breakfast, spicy)"
+                        >
+                    </div>
+
+                    <!-- diet preference -->
+                    <div class="form-object">
+                        <input
+                            type="text"
+                            name="diet"
+                            placeholder="Dietary preference (e.g. Vegan, Gluten-free)"
+                        >
+                    </div>
+
+                    <!-- cook time -->
+                    <div class="form-object">
+                        <input
+                            type="number"
+                            name="cook_time"
+                            min="0"
+                            placeholder="Cooking time (minutes)"
+                        >
+                    </div>
+
+                    <!-- difficulty -->
+                    <div class="form-object">
+                        <select name="difficulty">
+                            <option value="">Select difficulty</option>
+                            <option value="Easy">Easy</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Hard">Hard</option>
+                        </select>
+                    </div>
+
+                    <!-- image url -->
+                    <div class="form-object">
+                        <input
+                            type="url"
+                            name="img"
+                            placeholder="Image URL (optional)"
+                        >
+                    </div>
+
+                    <!-- submit -->
+                    <div class="form-object">
+                        <input type="submit" value="Submit Recipe">
+                        <input type="submit" value="Submit">
+                    </div>
+                    <!-- image upload -->
+                </div>
+            </form>
+    </div>
+</div>
+
+<%- include("partials/footer.ejs") %>

@@ -88,8 +88,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // declare global current user
 let user = [{
-    name: "user",
-    creator_name: "example name",
+    name: "Lena Marlowe",
+    creator_name: "Lena Marlowe",
     creator_id: 1,
 }];
 
@@ -123,7 +123,7 @@ app.get("/", async (req, res) => {
 app.get("/:id/accountcenter", (req, res) => {
     const account_id = req.params.id;
     // render the account center page
-    res.render("accountcenter.ejs", {
+    res.render("user/accountcenter.ejs", {
         __dirname,
         user,
         loggedIn,
@@ -156,6 +156,14 @@ app.get("/:id/recipe", (req, res) => {
     res.render("recipe.ejs", {
         __dirname,
         recipe,
+        user, 
+        loggedIn,
+    })
+})
+
+app.get("/draftrecipe", (req, res) => {
+    res.render("recipe-form.ejs", {
+        __dirname,
         user, 
         loggedIn,
     })
