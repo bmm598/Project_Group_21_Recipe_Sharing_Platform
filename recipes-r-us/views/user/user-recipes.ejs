@@ -44,21 +44,6 @@
                             <p>
                                 <%= recipe.body %> 
                             </p>
-                            <!-- tags block -->
-                            <% if (recipe.tags) { %>
-                                <div class="tag-container">
-                                    <% recipe.tags.split(",").forEach((tagRaw) => { 
-                                        const t = tagRaw.trim();
-                                        if (t.length === 0) return;
-                                    %>
-                                        <a
-                                            class="tag-badge"
-                                            href="/?tag=<%= encodeURIComponent(t) %><%= (typeof searchQuery !== 'undefined' && searchQuery.trim() !== '') ? '&q=' + encodeURIComponent(searchQuery) : '' %>">
-                                            <%= t %>
-                                        </a>
-                                    <% }) %>
-                                </div>
-                            <% } %>
                             <!-- if the current user is the owner of this post, then show edit and delete -->
                             <% if(locals.loggedIn == true) { %>
                                 <% if(locals.user[0].creator_id == recipe.creator_user_id) { %>
