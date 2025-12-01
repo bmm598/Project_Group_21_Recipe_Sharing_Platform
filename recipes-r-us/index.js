@@ -208,8 +208,6 @@ app.get("/:id/recipe", async (req, res) => {
         LEFT JOIN users u ON c.commenter_id = u.creator_id WHERE recipe_id = ${recipe_id}`);
     const comments = commentsResponse.rows;
 
-    console.log(comments);
-
     res.render("recipe.ejs", {
         __dirname,
         recipe,
@@ -217,6 +215,20 @@ app.get("/:id/recipe", async (req, res) => {
         loggedIn,
         comments,
     })
+})
+
+app.post("/:id/post-comment", async (req, res) => {
+    //console.log(req.body.content);
+    const recipe_id = req.params.id;
+    try {
+        await db.query(
+                `INSERT INTO comments (recipe_id, commenter_id, comment_text) VALUES ($1, $2, $3)`,
+                [recipe_id, user[0].creator_id, req.body.content]
+            );
+    } catch (error) {
+        console.error("Error executing query", error.stack);
+    }
+    res.redirect(`/${recipe_id}/recipe`);
 })
 
 app.get("/draftrecipe", (req, res) => {

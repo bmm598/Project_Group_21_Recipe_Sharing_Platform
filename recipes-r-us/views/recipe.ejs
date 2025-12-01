@@ -61,6 +61,30 @@
     </p>
 </div>
 
+<div class="body-container">
+    <div class="body-object">
+            <form id="make-comment" action="/<%= recipe.recipe_id %>/post-comment" method="POST">
+                <div class="comment-form-container">
+                    <div class="comment-form-object">
+                        <p>
+                            by: <%= user[0].name %>
+                        </p>
+                    </div>
+                    <div class="comment-form-object">
+                        <textarea
+                            name="content"
+                            placeholder="Your comment*"
+                            required
+                        ></textarea>
+                    </div>
+                    <div class="comment-form-object">
+                        <input type="submit" value="Submit comment">
+                    </div>
+                </div>
+            </form>
+    </div>
+</div>
+
 <comment>
     <% if (locals.comments) { %>
     <div class="comment-container">
