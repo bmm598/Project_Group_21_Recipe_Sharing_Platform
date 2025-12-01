@@ -169,9 +169,15 @@ app.get("/:id/recipe", async (req, res) => {
         LEFT JOIN users u ON r.creator_user_id = u.creator_id WHERE recipe_id = ${recipe_id}`);
     const recipe = recipeResponse.rows[0];
 
-    console.log(recipe);
-
-    const commentsResponse = await db.query(`SELECT * FROM comments WHERE recipe_id = ${recipe_id}`);
+    const commentsResponse = await db.query(`SELECT 
+            c.comment_id,
+            c.recipe_id,
+            c.commenter_id,
+            u.name AS commenter_name,
+            c.comment_text,
+            TO_CHAR(c.date_created, 'MM-DD-YYYY') AS date_created
+        FROM comments c
+        LEFT JOIN users u ON c.commenter_id = u.creator_id WHERE recipe_id = ${recipe_id}`);
     const comments = commentsResponse.rows;
 
     console.log(comments);
