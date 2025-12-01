@@ -87,14 +87,10 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // declare global current user
-let user = [{
-    name: "Lena Marlowe",
-    creator_name: "Lena Marlowe",
-    creator_id: 1,
-}];
+let user = [];
 
 // logged in boolean
-let loggedIn = true;
+let loggedIn = false;
 
 //requests
 
@@ -130,9 +126,11 @@ app.get("/:id/accountcenter", (req, res) => {
     })
 })
 
-app.get("/:id/accountcenter/recipes", (req, res) => {
+app.get("/:id/accountcenter/recipes", async (req, res) => {
     const account_id = req.params.id;
     const user_recipes = recipes.filter(recipe => recipe.creator_user_id == account_id);
+
+    recipes = await getRecipes("");
 
     res.render("user/user-recipes.ejs", {
         __dirname,
@@ -210,10 +208,10 @@ app.post("/signup", async (req, res) => {
         // try to add new user to db
         try {
             // hash password with bcrypt, use 10 salt rounds for security
-            const hashedPassword = await bcrypt.hash(password,10)
+            const hashedPassword = await bcrypt.hash(password,10);
             // updated using parameterized query with hashed password
             await db.query(
-                `INSERT INTO users (user_Id, password, name) VALUES ($1 $2 $3)`,
+                `INSERT INTO users (user_id, password, name) VALUES ($1, $2, $3)`,
                 [username, hashedPassword, name]
             );
             return res.redirect("/signin");
@@ -246,10 +244,11 @@ app.post("/signin", async (req, res) => {
         }
         
         const foundUser = response.rows[0];
+        // console.log(foundUser);
         
         // compare password with hashed password (Safety Feature)
         const passwordMatch = await bcrypt.compare(password, foundUser.password);
-        
+
         if (!passwordMatch) {
             // password doesn't match
             return res.render("signin.ejs", {response: "Incorrect username or password.", user: [], loggedIn: false});
@@ -446,8 +445,6 @@ app.post("/:id/edit", async (req, res) => {
         res.status(500).send("Error updating recipe");
     }
 });
-
-
 
 //recipe delete, ownership check
 app.post("/:id/delete", async (req, res) => {

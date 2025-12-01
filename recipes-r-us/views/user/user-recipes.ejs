@@ -1,20 +1,5 @@
 <%- include("../partials/header.ejs") %>
 
-<!-- search box -->
-<div class="search-bar-container">
-        <form action="/" method="GET" id="search-form">
-            <div class="search-bar-object">
-                <input
-                    type="search"
-                    name="q"
-                    placeholder="Search recipes by title, description, or tags"
-                    value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>"
-                >
-                <button type="submit">Search</button>
-            </div>
-        </form>
-</div>
-
 <!-- if recipes list exists -->
 <% if (locals.user_recipes) { %>
     <div class="recipe-container">
@@ -23,10 +8,12 @@
             <div class="recipe-object">
                 <a href="<%= __dirname %><%= recipe.recipe_id %>/recipe">
                     <div class="recipe-split">
+                        <% if (recipe.img) { %>
                         <div class="recipe-img">
                             <img src="<%= recipe.img %>" alt="Image of <%= recipe.title %>">
                         </div>
-                        <div class="recipe-description">
+                        <% } %>
+                        <div class=<%= recipe.img ? "recipe-description" : "recipe-description-no-img" %>>
                             <div>
                                 <%= recipe.date_created %> 
                             </div>

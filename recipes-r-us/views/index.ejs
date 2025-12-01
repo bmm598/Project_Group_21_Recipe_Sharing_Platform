@@ -23,10 +23,12 @@
             <div class="recipe-object">
                 <a href="<%= __dirname %><%= recipe.recipe_id %>/recipe">
                     <div class="recipe-split">
+                        <% if (recipe.img) { %>
                         <div class="recipe-img">
                             <img src="<%= recipe.img %>" alt="Image of <%= recipe.title %>">
                         </div>
-                        <div class="recipe-description">
+                        <% } %>
+                        <div class=<%= recipe.img ? "recipe-description" : "recipe-description-no-img" %>>
                             <div>
                                 <%= recipe.date_created %> 
                             </div>
