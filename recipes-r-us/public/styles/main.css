@@ -36,10 +36,12 @@ body {
 .search-bar-object input, button {
     padding: 15px;
     box-sizing: border-box;
+    border-radius: 25px;
+    border-width: 1px;
 }
 
 .search-bar-object input {
-    width: 300px;
+    width: 400px;
 }
 
 .form-container {
