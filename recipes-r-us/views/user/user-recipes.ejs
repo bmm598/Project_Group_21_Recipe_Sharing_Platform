@@ -20,7 +20,7 @@
                             <h3> 
                                 <%= recipe.title %> 
                             </h3>
-                            <div>by: <%= recipe.creator_name %> </div>
+                            <div><%= recipe.creator_name %> </div>
                             <div class="star-rating" id="starRating">
                                 <span class="star <%= recipe.avg_rating > 1? "checked" : null %>">&#9733;</span>
                                 <span class="star <%= recipe.avg_rating > 2? "checked" : null %>">&#9733;</span>

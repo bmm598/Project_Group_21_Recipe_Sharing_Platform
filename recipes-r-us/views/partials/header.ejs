@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="/styles/footer.css">
     <link rel="stylesheet" href="/styles/recipes.css">
     <link rel="stylesheet" href="/styles/comment.css">
+    <link rel="stylesheet" href="/styles/account.css">
+    <link rel="stylesheet" href="/styles/view-recipe.css">
     <title>Recipe's R Us</title>
 </head>
 <header>
@@ -25,7 +27,12 @@
                     <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter" ><img src="/images/icons/user.png" alt="account icon" class="dropbtn"></a>
                     <div class="dropdown-content">
                         <div class="inner-dropdown">
-                            <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter">Account Center</a>
+                            <!-- <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter">Account Center</a> -->
+                            <form id="accountcenter" action="/<%= user[0].creator_id %>/accountcenter" method="get">
+                                <div class="form-object">
+                                    <input type="submit" value="Account Center">
+                                </div>
+                            </form>
                             <div class="inner-dropdown-content">
                                 <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter/recipes">Your Recipes</a>
                                 <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter/collections">Collections</a>

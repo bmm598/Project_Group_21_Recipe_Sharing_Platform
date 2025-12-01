@@ -68,6 +68,8 @@ body {
     padding: 15px;
     width: 100%;
     box-sizing: border-box;
+    border-radius: 10px;
+    border-width: 1px;
 }
 
 .form-object textarea {
@@ -79,6 +81,7 @@ body {
     overflow: auto;
     resize: vertical;
     height: 500px;
+    border-radius: 10px;
 }
 
 .edit-object {

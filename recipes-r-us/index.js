@@ -147,15 +147,41 @@ app.post("/search", (req, res) => {
     res.redirect("/");
 })
 
-app.get("/:id/recipe", (req, res) => {
+app.get("/:id/recipe", async (req, res) => {
     const recipe_id = req.params.id;
-    const recipe = recipes.find(item => item.recipe_id == recipe_id);
+    const recipeResponse = await db.query(`SELECT
+            r.recipe_id,
+            r.title,
+            r.body,
+            r.img,
+            r.ingredients,
+            r.instructions,
+            r.tags,
+            r.diet,
+            r.cook_time,
+            r.difficulty,
+            r.creator_user_id,
+            TO_CHAR(r.date_created, 'MM-DD-YYYY') AS date_created,
+            u.name AS creator_name,
+            r.avg_rating,
+            r.total_ratings
+        FROM recipes r 
+        LEFT JOIN users u ON r.creator_user_id = u.creator_id WHERE recipe_id = ${recipe_id}`);
+    const recipe = recipeResponse.rows[0];
+
+    console.log(recipe);
+
+    const commentsResponse = await db.query(`SELECT * FROM comments WHERE recipe_id = ${recipe_id}`);
+    const comments = commentsResponse.rows;
+
+    console.log(comments);
 
     res.render("recipe.ejs", {
         __dirname,
         recipe,
         user, 
         loggedIn,
+        comments,
     })
 })
 
@@ -320,9 +346,9 @@ app.post("/submit", async (req, res) => {
                 title,
                 content,
                 img || null,
-                ingredients || null,
-                instructions || null,
-                tags || null,
+                toTitleCase(ingredients) || null,
+                toTitleCase(instructions) || null,
+                toTitleCase(tags) || null,
                 diet || null,
                 cook_time ? parseInt(cook_time) : null,
                 difficulty || null,

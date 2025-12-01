@@ -38,11 +38,13 @@ header {
 .dropdown {
   position: relative;
   display: inline-block;
+  border-radius: 10px;
 }
 
 .inner-dropdown {
   position: relative;
   display: inline-block;
+  border-radius: 10px;
 }
 
 .dropdown-content {
@@ -87,9 +89,9 @@ header {
     font-size: 16px;
 }
 
-.dropdown-content a:hover {background-color: #ddd; transition-duration: 0.2s;}
+.dropdown-content a:hover {background-color: #ddd; transition-duration: 0.2s; border-radius: 10px; }
 
-.dropdown-content input:hover {background-color: #ddd; transition-duration: 0.2s;}
+.dropdown-content input:hover {background-color: #ddd; transition-duration: 0.2s; border-radius: 10px; width: 100%;}
 
 .dropdown:hover .dropdown-content {display: block; transition-duration: 0.2s;}
 

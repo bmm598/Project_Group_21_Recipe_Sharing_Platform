@@ -1,22 +1,54 @@
 <%- include("partials/header.ejs") %>
 
+<div class="recipe-body-container">
+    <div class="view-recipe-container">
+        <div class="view-recipe-ingredients">
+            <% if (recipe.img) { %>
+            <img class="view-recipe-img" src="<%= recipe.img %>" alt="Image of <%= recipe.title %>">
+            <% } %>
+        </div>
+        <div class="view-recipe-instructions">
+            <h1><%= recipe.title %></h1>
+            <p>
+                <%= recipe.date_created %> 
+            </p>
+            <p>
+                by: <%= recipe.creator_name %>
+            </p>
+            <p>
+                <%= recipe.body %>
+            </p>
+            <p class="body-object">
+                Diet: <%= recipe.diet %>
+            </p>
+            <p class="body-object">
+                Difficulty: <%= recipe.difficulty %>
+            </p>
+        </div>
+    </div>
+    <div class="view-recipe-container">
+        <% if (recipe.ingredients) { %>
+        <div class="view-recipe-ingredients">
+            <h1>Ingredients</h1>
+            <% recipe.ingredients.split(",").forEach((ingredient) => { %>
+                <p><%= ingredient %></p>
+            <% }); %>
+        </div>
+        <% } %>
+        <% if (recipe.instructions) { %>
+        <div class="view-recipe-instructions">
+            <h1>Steps</h1>
+            <span class="timer"><img src="/images/icons/clock.png" alt="clock-icon"> <%= recipe.cook_time %> Minutes</span>
+            <ol>
+            <% recipe.instructions.split(",").forEach((instruction) => { %>
+                <li><p><%= instruction %></p></li>
+            <% }); %>
+            </ol>
+        </div>
+        <% } %>
+    </div>
+</div>
 <div class="body-container">
-    <div class="body-object">
-        <h1><%= recipe.title %></h1>
-    </div>
-    <div class="view-recipe-img">
-        <img src="<%= recipe.img %>" alt="Image of <%= recipe.title %>">
-    </div>
-    <p>
-        <%= recipe.date_created %> 
-    </p>
-    <p>
-        by: <%= recipe.creator_name %>
-    </p>
-    <p class="body-object">
-        <%= recipe.body %>
-    </p>
-
     <div class="star-rating" id="starRating">
         <span class="star <%= recipe.avg_rating > 1? "checked" : null %>">&#9733;</span>
         <span class="star <%= recipe.avg_rating > 2? "checked" : null %>">&#9733;</span>
