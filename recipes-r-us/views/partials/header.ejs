@@ -27,17 +27,19 @@
                     <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter" ><img src="/images/icons/user.png" alt="account icon" class="dropbtn"></a>
                     <div class="dropdown-content">
                         <div class="inner-dropdown">
-                            <!-- <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter">Account Center</a> -->
-                            <form id="accountcenter" action="/<%= user[0].creator_id %>/accountcenter" method="get">
+                            <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter/recipes">Your Recipes</a>
+                            <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter/collections">Collections</a>
+                            <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter/favorites">Favorite Recipes</a>
+                            <!-- <form id="accountcenter" action="/<%= user[0].creator_id %>/accountcenter/recipes" method="get">
                                 <div class="form-object">
                                     <input type="submit" value="Account Center">
                                 </div>
-                            </form>
-                            <div class="inner-dropdown-content">
+                            </form> -->
+                            <!-- <div class="inner-dropdown-content">
                                 <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter/recipes">Your Recipes</a>
                                 <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter/collections">Collections</a>
                                 <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter/favorites">Favorite Recipes</a>
-                            </div>
+                            </div> -->
                         </div>
                         <!-- <a href="#">Link 2</a> -->
                         <form id="sign-out" action="/signout" method="post">

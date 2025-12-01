@@ -119,7 +119,7 @@ app.get("/", async (req, res) => {
 app.get("/:id/accountcenter", (req, res) => {
     const account_id = req.params.id;
     // render the account center page
-    res.render("user/accountcenter.ejs", {
+    res.render("user/settings.ejs", {
         __dirname,
         user,
         loggedIn,
@@ -133,6 +133,34 @@ app.get("/:id/accountcenter/recipes", async (req, res) => {
     recipes = await getRecipes("");
 
     res.render("user/user-recipes.ejs", {
+        __dirname,
+        user,
+        loggedIn,
+        user_recipes,
+    })
+})
+
+app.get("/:id/accountcenter/collections", async (req, res) => {
+    const account_id = req.params.id;
+    const user_recipes = recipes.filter(recipe => recipe.creator_user_id == account_id);
+
+    recipes = await getRecipes("");
+
+    res.render("user/collections.ejs", {
+        __dirname,
+        user,
+        loggedIn,
+        user_recipes,
+    })
+})
+
+app.get("/:id/accountcenter/favorites", async (req, res) => {
+    const account_id = req.params.id;
+    const user_recipes = recipes.filter(recipe => recipe.creator_user_id == account_id);
+
+    recipes = await getRecipes("");
+
+    res.render("user/favorites.ejs", {
         __dirname,
         user,
         loggedIn,
