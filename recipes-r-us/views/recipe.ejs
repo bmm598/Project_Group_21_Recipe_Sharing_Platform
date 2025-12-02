@@ -108,6 +108,30 @@
     <div class="body-object">
             <form id="make-comment" action="/<%= recipe.recipe_id %>/post-comment" method="POST">
                 <div class="comment-form-container">
+                    <div class="comment-form-rating">
+                        <input
+                            type="range"
+                            name="rating"
+                            min="1"
+                            max="5"
+                            required
+                            list="markers"
+                        >
+                        <datalist id="markers">
+                            <option value="1" label="1 Star"></option>
+                            <option value="2" label="2 Star"></option>
+                            <option value="3" label="3 Star"></option>
+                            <option value="4" label="4 Star"></option>
+                            <option value="5" label="5 Star"></option>
+                        </datalist>
+                        <div class="rating">
+                            <span class="star checked" data-value="1">&#9733;</span>
+                            <span class="star checked" data-value="2">&#9733;</span>
+                            <span class="star checked" data-value="3">&#9733;</span>
+                            <span class="star checked" data-value="4">&#9733;</span>
+                            <span class="star checked" data-value="5">&#9733;</span>
+                        </div>
+                    </div>
                     <div class="comment-form-object">
                         <p>
                             by: <%= user[0].name %>
