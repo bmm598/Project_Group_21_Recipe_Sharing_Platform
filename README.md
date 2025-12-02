@@ -28,88 +28,69 @@ Full stack recipe sharing application build with bcrypt, Node.js, Express.js, EJ
   - **Session Management**: expess-session
   - **Database Client**: pg
 
-## Project Structure ##
+## Database Setup ##
 
-Project_Group_21_Recipe_Sharing_Platform/ 
+### Step 1 - Install PostgreSQL
+Make sure PostgreSQL is installed on your system. Download from postgresql.org
 
-│ 
+### Step 2 - Create Database
+Using pgAdmin or psql command line:
+CREATE DATABASE recipes_r_us;
 
-├── deliverables/ 
+### Step 3 - Create Tables
+Connect to the recipes_r_us database and create the tables in the schema.sql file
 
-│   ├── phase-1/ 
+## Installation & Setup ##
 
-│   │   ├── CS-312-Project Phase - 1 Report Template.docx 
-
-│   │   └── phase-1-report.md 
-
-│   └── phase-2/ 
-
-│   │   └── phase-2-report.md 
-
-│ 
-
-├── recipes-r-us/ 
-
-│   ├── public/ 
-
-│   │   ├── images/icons/ 
-
-│   │   │   └── user.png 
-
-│   │   └── styles/ 
-
-│   │       ├── comment.css 
-
-│   │       ├── footer.css 
-
-│   │       ├── header.css 
-
-│   │       ├── main.css 
-
-│   │       ├── recipes.css 
-
-│   │       └── sign.css 
-
-│   ├── views/ 
-
-│   │   ├── partials/ 
-
-│   │   │   ├── footer.ejs 
-
-│   │   │   ├── header.ejs 
-
-│   │   │   └── sign-header.ejs 
-
-│   │   └── user/ 
-
-│   │   │   ├── user-recipes.ejs 
-
-│   │   ├── accountcenter.ejs 
-
-│   │   ├── index.ejs 
-
-│   │   ├── signup.ejs 
-
-│   │   ├── signin.ejs 
-
-│   ├── helper.js 
-
-│   ├── index.js 
-
-│   ├── package-lock.json 
-
-│   ├── package.json 
-
-│   ├── recipes.js 
-
-│   ├── schema.sql 
-
-└──.gitignore 
-
-└── README.md 
+### 1. Clone the repository
 
 
+git clone https://github.com/your-username/Project_Group_21_Recipe_Sharing_Platform
+
+cd Project_Group_21_Recipe_Sharing_Platform/recipes-r-us
 
 
+### 2. Install dependencies
+
+npm install
+
+### 3. Configure Database Connection
+
+Edit `server.js` and update the database connection settings to match your postgresql settings: 
+
+const pool = new Pool({
+
+  user: 'your_postgres_username',
+  
+  host: 'localhost',
+  
+  database: 'recipes_r_us',
+  
+  password: 'your_postgres_password',
+  
+  port: 5432,
+  
+});
+
+### 4. Start the server
+
+node index.js
+
+### 5. Open your browser
+
+Navigate to `http://localhost:3000`
+
+## License
+
+ISC
+
+## Author
+
+Dante, Brenden, Joseph
+
+---
+
+
+# CS-312 Group 21 - Recipe Sharing Platform
 
 
