@@ -25,11 +25,20 @@ body {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    align-items: start; 
+    align-items: center;
     width: 100%;
     justify-content: space-evenly;
     padding-top: 50px;
     box-sizing: border-box;
+    gap: 15px;
+}
+
+.search-bar-object {
+    padding: 5px;
+    display:flex;
+    justify-content: center;
+    align-content: center;
+    margin: auto 0;
     gap: 15px;
 }
 
