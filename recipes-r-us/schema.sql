@@ -55,3 +55,16 @@ CREATE TABLE IF NOT EXISTS saved_recipes (
     saved_at  TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     PRIMARY KEY (user_id, recipe_id)
 );
+
+CREATE TABLE IF NOT EXISTS comments (
+    comment_id   SERIAL PRIMARY KEY,
+    recipe_id    INTEGER NOT NULL
+        REFERENCES recipes(recipe_id)
+        ON DELETE CASCADE,
+    commenter_id INTEGER NOT NULL
+        REFERENCES users(creator_id)
+        ON DELETE CASCADE,
+    comment_text TEXT NOT NULL,
+    date_created TIMESTAMP WITHOUT TIME ZONE NOT NULL
+        DEFAULT CURRENT_TIMESTAMP
+);
