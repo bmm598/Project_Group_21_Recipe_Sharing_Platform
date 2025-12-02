@@ -16,9 +16,6 @@ Full stack recipe sharing application build with bcrypt, Node.js, Express.js, EJ
      - Rate a post out of 5 stars
      - Persisent storage with PostgreSQL database
 
- - **Design**
-     - {placeholder}
-
 ## Technologies Used ##
 
   - **Backend**: Node.js, Express.js, bcrypt
@@ -58,7 +55,7 @@ npm install
 
 Edit `server.js` and update the database connection settings to match your postgresql settings: 
 
-const pool = new Pool({
+const db = new pg.Client({
 
   user: 'your_postgres_username',
   
@@ -92,5 +89,6 @@ Dante, Brenden, Joseph
 
 
 # CS-312 Group 21 - Recipe Sharing Platform
+
 
 
