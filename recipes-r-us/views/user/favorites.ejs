@@ -1,11 +1,44 @@
 <%- include("../partials/header.ejs") %>
-<div class="account-center-container">
-    <div class="account-center-object">
-        <h1>Your Favorite Recipes</h1>
-    </div>  
 
-    <div class="account-center-object">
-        
-    </div>  
+<div class="account-center-container">
+    <div class="recipe-container">
+        <h1>Your Favorite Recipes (<%= savedRecipes ? savedRecipes.length : 0 %>)</h1>
+    </div>
+
+    <% if (!savedRecipes || savedRecipes.length === 0) { %>
+        <div class="account-center-object">
+            <p>You haven't saved any recipes yet. Go save some from the main page!</p>
+        </div>
+    <% } else { %>
+        <div class="recipe-container">
+            <% savedRecipes.forEach(recipe => { %>
+                <div class="recipe-object">
+                    <a href="<%= __dirname %><%= recipe.recipe_id %>/recipe">
+                        <div class="recipe-split">
+                        <% if (recipe.img) { %>
+                        <div class="recipe-img">
+                            <img src="<%= recipe.img %>" alt="Image of <%= recipe.title %>">
+                        </div>
+                        <% } %>
+                        <div class=<%= recipe.img ? "recipe-description" : "recipe-description-no-img" %>>
+                            <div><%= recipe.date_created %></div>
+                            <h3><%= recipe.title %></h3>
+                            <div><%= recipe.creator_name %></div>
+                            <div class="star-rating" id="starRating">
+                                <span class="star <%= recipe.avg_rating >= 1 ? "checked" : "" %>">&#9733;</span>
+                                <span class="star <%= recipe.avg_rating >= 2 ? "checked" : "" %>">&#9733;</span>
+                                <span class="star <%= recipe.avg_rating >= 3 ? "checked" : "" %>">&#9733;</span>
+                                <span class="star <%= recipe.avg_rating >= 4 ? "checked" : "" %>">&#9733;</span>
+                                <span class="star <%= recipe.avg_rating >= 5 ? "checked" : "" %>">&#9733;</span>
+                            </div>
+                            <p><%= recipe.body %></p>
+                        </div>
+                        </div>
+                    </a>
+                </div>
+            <% }); %>
+        </div>
+    <% } %>
 </div>
+
 <%- include("../partials/footer.ejs") %>

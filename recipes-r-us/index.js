@@ -292,19 +292,116 @@ app.get("/:id/accountcenter", (req, res) => {
     })
 })
 
-app.get("/:id/accountcenter/recipes", async (req, res) => {
-    const account_id = req.params.id;
-    const user_recipes = recipes.filter(recipe => recipe.creator_user_id == account_id);
+app.get("/:id/accountcenter", (req, res) => {
+    const account_id = parseInt(req.params.id, 10);
 
-    recipes = await getRecipes("");
+    if (!loggedIn || !user[0] || user[0].creator_id !== account_id) {
+        return res.redirect("/signin");
+    }
 
-    res.render("user/user-recipes.ejs", {
+    res.render("user/settings.ejs", {
         __dirname,
         user,
         loggedIn,
-        user_recipes,
-    })
-})
+    });
+});
+
+app.get("/:id/accountcenter/favorites", async (req, res) => {
+    const account_id = parseInt(req.params.id, 10);
+
+    if (!loggedIn || !user[0] || user[0].creator_id !== account_id) {
+        return res.redirect("/signin");
+    }
+
+    try {
+        const favResult = await db.query(
+            `
+            SELECT
+                r.recipe_id,
+                r.title,
+                r.body,
+                r.img,
+                r.tags,
+                r.diet,
+                r.cook_time,
+                r.difficulty,
+                r.avg_rating,
+                r.total_ratings,
+                TO_CHAR(r.date_created, 'MM-DD-YYYY') AS date_created,
+                u.name AS creator_name,
+                r.creator_user_id
+            FROM saved_recipes s
+            JOIN recipes r
+              ON s.recipe_id = r.recipe_id
+            LEFT JOIN users u
+              ON r.creator_user_id = u.creator_id
+            WHERE s.user_id = $1
+            ORDER BY s.saved_at DESC
+            `,
+            [account_id]
+        );
+
+        const savedRecipes = favResult.rows;
+
+        res.render("user/favorites.ejs", {
+            __dirname,
+            user,
+            loggedIn,
+            savedRecipes,
+        });
+    } catch (error) {
+        console.error("Favorites load error:", error.stack);
+        res.status(500).send("Error loading favorite recipes");
+    }
+});
+
+app.get("/:id/accountcenter/recipes", async (req, res) => {
+    const account_id = parseInt(req.params.id, 10);
+
+    if (!loggedIn || !user[0] || user[0].creator_id !== account_id) {
+        return res.redirect("/signin");
+    }
+
+    try {
+        const result = await db.query(
+            `
+            SELECT
+                r.recipe_id,
+                r.title,
+                r.body,
+                r.img,
+                r.ingredients,
+                r.instructions,
+                r.tags,
+                r.diet,
+                r.cook_time,
+                r.difficulty,
+                r.creator_user_id,
+                TO_CHAR(r.date_created, 'MM-DD-YYYY') AS date_created,
+                u.name AS creator_name,
+                r.avg_rating,
+                r.total_ratings
+            FROM recipes r
+            LEFT JOIN users u ON r.creator_user_id = u.creator_id
+            WHERE r.creator_user_id = $1
+            ORDER BY r.date_created DESC
+            `,
+            [account_id]
+        );
+
+        const user_recipes = result.rows;
+
+        res.render("user/user-recipes.ejs", {
+            __dirname,
+            user,
+            loggedIn,
+            user_recipes,
+        });
+    } catch (error) {
+        console.error("User recipes load error:", error.stack);
+        res.status(500).send("Error loading your recipes");
+    }
+});
 
 app.get("/:id/accountcenter/collections", async (req, res) => {
     const account_id = req.params.id;
@@ -313,20 +410,6 @@ app.get("/:id/accountcenter/collections", async (req, res) => {
     recipes = await getRecipes("");
 
     res.render("user/collections.ejs", {
-        __dirname,
-        user,
-        loggedIn,
-        user_recipes,
-    })
-})
-
-app.get("/:id/accountcenter/favorites", async (req, res) => {
-    const account_id = req.params.id;
-    const user_recipes = recipes.filter(recipe => recipe.creator_user_id == account_id);
-
-    recipes = await getRecipes("");
-
-    res.render("user/favorites.ejs", {
         __dirname,
         user,
         loggedIn,
@@ -472,14 +555,6 @@ app.post("/:id/rate", async (req, res) => {
         return res.redirect(`/${recipeId}/recipe`);
     }
 });
-
-    res.render("recipe.ejs", {
-        __dirname,
-        recipe,
-        user, 
-        loggedIn,
-        comments,
-    })
 
 app.post("/:id/post-comment", async (req, res) => {
     //console.log(req.body.content);
