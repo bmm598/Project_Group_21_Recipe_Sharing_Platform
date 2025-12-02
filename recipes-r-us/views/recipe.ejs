@@ -80,7 +80,7 @@
 <% if (locals.loggedIn) { %>
 <div class="body-container">
     <div class="body-object">
-            <form id="make-comment" action="/<%= recipe.recipe_id %>/post-comment" method="POST">
+        <form id="rate" action="/<%= recipe.recipe_id %>/rate" method="POST">
                 <div class="comment-form-container">
                     <div class="comment-form-rating">
                         <input
@@ -105,7 +105,18 @@
                             <span class="star checked" data-value="4">&#9733;</span>
                             <span class="star checked" data-value="5">&#9733;</span>
                         </div>
+                        <div class="comment-form-object">
+                            <input type="submit" value="Submit rating">
+                        </div>
                     </div>
+                </div>
+            </form>
+    </div>
+</div>
+<div class="body-container">
+    <div class="body-object">
+            <form id="make-comment" action="/<%= recipe.recipe_id %>/post-comment" method="POST">
+                <div class="comment-form-container">
                     <div class="comment-form-object">
                         <p>
                             by: <%= user[0].name %>

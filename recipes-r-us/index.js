@@ -539,6 +539,7 @@ app.post("/:id/rate", async (req, res) => {
     }
 
     const userId = user[0].creator_id;
+
     const rating = parseInt(req.body.rating, 10);
 
     // basic validation
