@@ -1,20 +1,8 @@
 <%- include("../partials/header.ejs") %>
-
-<!-- search box -->
-<div class="search-bar-container">
-        <form action="/" method="GET" id="search-form">
-            <div class="search-bar-object">
-                <input
-                    type="search"
-                    name="q"
-                    placeholder="Search recipes by title, description, or tags"
-                    value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>"
-                >
-                <button type="submit">Search</button>
-            </div>
-        </form>
-</div>
-
+<div class="account-center-container">
+    <div class="recipe-container">
+        <h1>Your Recipes (<%= user_recipes.length %>)</h1>
+    </div>
 <!-- if recipes list exists -->
 <% if (locals.user_recipes) { %>
     <div class="recipe-container">
@@ -23,17 +11,19 @@
             <div class="recipe-object">
                 <a href="<%= __dirname %><%= recipe.recipe_id %>/recipe">
                     <div class="recipe-split">
+                        <% if (recipe.img) { %>
                         <div class="recipe-img">
                             <img src="<%= recipe.img %>" alt="Image of <%= recipe.title %>">
                         </div>
-                        <div class="recipe-description">
+                        <% } %>
+                        <div class=<%= recipe.img ? "recipe-description" : "recipe-description-no-img" %>>
                             <div>
                                 <%= recipe.date_created %> 
                             </div>
                             <h3> 
                                 <%= recipe.title %> 
                             </h3>
-                            <div>by: <%= recipe.creator_name %> </div>
+                            <div><%= recipe.creator_name %> </div>
                             <div class="star-rating" id="starRating">
                                 <span class="star <%= recipe.avg_rating > 1? "checked" : null %>">&#9733;</span>
                                 <span class="star <%= recipe.avg_rating > 2? "checked" : null %>">&#9733;</span>
@@ -44,21 +34,6 @@
                             <p>
                                 <%= recipe.body %> 
                             </p>
-                            <!-- tags block -->
-                            <% if (recipe.tags) { %>
-                                <div class="tag-container">
-                                    <% recipe.tags.split(",").forEach((tagRaw) => { 
-                                        const t = tagRaw.trim();
-                                        if (t.length === 0) return;
-                                    %>
-                                        <a
-                                            class="tag-badge"
-                                            href="/?tag=<%= encodeURIComponent(t) %><%= (typeof searchQuery !== 'undefined' && searchQuery.trim() !== '') ? '&q=' + encodeURIComponent(searchQuery) : '' %>">
-                                            <%= t %>
-                                        </a>
-                                    <% }) %>
-                                </div>
-                            <% } %>
                             <!-- if the current user is the owner of this post, then show edit and delete -->
                             <% if(locals.loggedIn == true) { %>
                                 <% if(locals.user[0].creator_id == recipe.creator_user_id) { %>
@@ -83,5 +58,6 @@
         <% }); %>
     </div>
 <% } %>
+</div>
 
 <%- include("../partials/footer.ejs") %>

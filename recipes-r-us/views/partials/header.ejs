@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="/styles/footer.css">
     <link rel="stylesheet" href="/styles/recipes.css">
     <link rel="stylesheet" href="/styles/comment.css">
+    <link rel="stylesheet" href="/styles/account.css">
+    <link rel="stylesheet" href="/styles/view-recipe.css">
     <title>Recipe's R Us</title>
 </head>
 <header>
@@ -18,6 +20,57 @@
         <div class="header-object">
             <h3>Recipe Sharing Platform</h3>
         </div>
+        <div class="header-object tag-nav">
+            <a
+                href="/"
+                class="tag-nav-link <%= (!selectedTag || selectedTag.trim() === '') ? 'active-tag' : '' %>"
+            >
+                All
+            </a>
+            <a
+                href="/?tag=Breakfast"
+                class="tag-nav-link <%= selectedTag === 'Breakfast' ? 'active-tag' : '' %>"
+            >
+                Breakfast
+            </a>
+            <a
+                href="/?tag=Lunch"
+                class="tag-nav-link <%= selectedTag === 'Lunch' ? 'active-tag' : '' %>"
+            >
+                Lunch
+            </a>
+            <a
+                href="/?tag=Dinner"
+                class="tag-nav-link <%= selectedTag === 'Dinner' ? 'active-tag' : '' %>"
+            >
+                Dinner
+            </a>
+            <a
+                href="/?tag=Dessert"
+                class="tag-nav-link <%= selectedTag === 'Dessert' ? 'active-tag' : '' %>"
+            >
+                Dessert
+            </a>
+            <a
+                href="/?tag=Vegan"
+                class="tag-nav-link <%= selectedTag === 'Vegan' ? 'active-tag' : '' %>"
+            >
+                Vegan
+            </a>
+            <a
+                href="/?tag=Vegetarian"
+                class="tag-nav-link <%= selectedTag === 'Vegetarian' ? 'active-tag' : '' %>"
+            >
+                Vegetarian
+            </a>
+            <a
+                href="/?tag=Gluten-free"
+                class="tag-nav-link <%= selectedTag === 'Gluten-free' ? 'active-tag' : '' %>"
+            >
+                Gluten-free
+            </a>
+        </div>
+
         <% if(locals.loggedIn == true) { %>
             <div class="header-object">
                 <h3>Hello, <%= user[0].name %></h3>
@@ -25,18 +78,32 @@
                     <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter" ><img src="/images/icons/user.png" alt="account icon" class="dropbtn"></a>
                     <div class="dropdown-content">
                         <div class="inner-dropdown">
-                            <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter">Account Center</a>
-                            <div class="inner-dropdown-content">
+                            <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter/recipes">Your Recipes</a>
+                            <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter/collections">Collections</a>
+                            <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter/favorites">Favorite Recipes</a>
+                            <!-- <form id="accountcenter" action="/<%= user[0].creator_id %>/accountcenter/recipes" method="get">
+                                <div class="form-object">
+                                    <input type="submit" value="Account Center">
+                                </div>
+                            </form> -->
+                            <!-- <div class="inner-dropdown-content">
                                 <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter/recipes">Your Recipes</a>
                                 <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter/collections">Collections</a>
                                 <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter/favorites">Favorite Recipes</a>
-                            </div>
+                            </div> -->
                         </div>
                         <!-- <a href="#">Link 2</a> -->
                         <form id="sign-out" action="/signout" method="post">
                             <input type="submit" value="Sign Out">
                         </form>
                     </div>
+                </div>
+                <div class="header-object">
+                    <form id="draft-recipe" action="/draftrecipe" method="get">
+                        <div class="form-object">
+                            <input type="submit" value="+ New Recipe">
+                        </div>
+                    </form>
                 </div>
             </div>
         <% } else { %>

@@ -7,6 +7,8 @@
     gap: 25px;
     margin: auto;
     width: 50%;
+    margin-top: 25px;
+    box-sizing: border-box;
 }
 
 .comment-object {
@@ -14,8 +16,73 @@
     flex-direction: column;
     color: black;
     padding: 15px;
-    width: 100%;
+    width: 50vw;
     box-shadow: 0 0 5px gray;
     background-color: white;
     border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.comment-form-container {
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center; 
+    width: 50vw;
+    box-shadow: 0 0 5px gray;
+    background-color: white;
+    justify-content: space-evenly;
+    padding: 25px;
+    box-sizing: border-box;
+    gap: 15px;
+    border-radius: 10px;
+    margin-top: 50px;
+}
+
+.comment-form-object input {
+    padding: 15px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border-width: 1px;
+    width: 100%;
+}
+
+.comment-form-rating {
+    width: 30%;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.comment-form-rating input {
+    padding: 15px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border-width: 1px;
+    width: 100%;
+}
+
+.comment-form-object {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.comment-form-object textarea {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 15px;
+    resize: vertical;
+    font-family: Helvetica;
+    overflow: auto;
+    resize: vertical;
+    height: 100px;
+    border-radius: 10px;
+}
+
+.rating {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 3em;
 }

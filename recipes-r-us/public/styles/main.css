@@ -25,21 +25,32 @@ body {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    align-items: start; 
+    align-items: center;
     width: 100%;
     justify-content: space-evenly;
-    padding: 50px;
+    padding-top: 50px;
     box-sizing: border-box;
+    gap: 15px;
+}
+
+.search-bar-object {
+    padding: 5px;
+    display:flex;
+    justify-content: center;
+    align-content: center;
+    margin: auto 0;
     gap: 15px;
 }
 
 .search-bar-object input, button {
     padding: 15px;
     box-sizing: border-box;
+    border-radius: 25px;
+    border-width: 1px;
 }
 
 .search-bar-object input {
-    width: 300px;
+    width: 400px;
 }
 
 .form-container {
@@ -56,6 +67,7 @@ body {
     box-sizing: border-box;
     gap: 15px;
     border-radius: 10px;
+    margin-top: 50px;
 }
 
 .form-object {
@@ -67,6 +79,8 @@ body {
     padding: 15px;
     width: 100%;
     box-sizing: border-box;
+    border-radius: 10px;
+    border-width: 1px;
 }
 
 .form-object textarea {
@@ -78,6 +92,7 @@ body {
     overflow: auto;
     resize: vertical;
     height: 500px;
+    border-radius: 10px;
 }
 
 .edit-object {
