@@ -37,7 +37,7 @@ Project_Group_21_Recipe_Sharing_Platform/
 │   │   ├── CS-312-Project Phase - 1 Report Template.docx 
 │   │   └── phase-1-report.md 
 │   └── phase-2/ 
-│       └── phase-2-report.md 
+│   │   └── phase-2-report.md 
 │ 
 ├── recipes-r-us/ 
 │   ├── public/ 
@@ -69,6 +69,7 @@ Project_Group_21_Recipe_Sharing_Platform/
 │   ├── schema.sql 
 └──.gitignore 
 └── README.md 
+
 
 
 
