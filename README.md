@@ -53,7 +53,7 @@ npm install
 
 ### 3. Configure Database Connection
 
-Edit `server.js` and update the database connection settings to match your postgresql settings: 
+Edit `index.js` and update the database connection settings to match your postgresql settings: 
 
 const db = new pg.Client({
 
@@ -89,6 +89,7 @@ Dante, Brenden, Joseph
 
 
 # CS-312 Group 21 - Recipe Sharing Platform
+
 
 
 
