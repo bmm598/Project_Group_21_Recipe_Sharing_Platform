@@ -50,15 +50,58 @@
 </div>
 <div class="body-container">
     <div class="star-rating" id="starRating">
-        <span class="star <%= recipe.avg_rating > 1? "checked" : null %>">&#9733;</span>
-        <span class="star <%= recipe.avg_rating > 2? "checked" : null %>">&#9733;</span>
-        <span class="star <%= recipe.avg_rating > 3? "checked" : null %>">&#9733;</span>
-        <span class="star <%= recipe.avg_rating > 4? "checked" : null %>">&#9733;</span>
-        <span class="star <%= recipe.avg_rating == 5? "checked" : null %>">&#9733;</span>
+        <span class="star <%= recipe.avg_rating >= 1 ? 'checked' : '' %>">&#9733;</span>
+        <span class="star <%= recipe.avg_rating >= 2 ? 'checked' : '' %>">&#9733;</span>
+        <span class="star <%= recipe.avg_rating >= 3 ? 'checked' : '' %>">&#9733;</span>
+        <span class="star <%= recipe.avg_rating >= 4 ? 'checked' : '' %>">&#9733;</span>
+        <span class="star <%= recipe.avg_rating >= 5 ? 'checked' : '' %>">&#9733;</span>
     </div>
     <p>
         <%= recipe.avg_rating %> average based on <%= recipe.total_ratings? recipe.total_ratings : 0 %> reviews. 
     </p>
+
+    <% if (loggedIn) { %>
+        <form
+            action="/<%= recipe.recipe_id %>/save"
+            method="POST"
+            class="save-recipe-form"
+        >
+            <button type="submit" class="save-recipe-button">
+                <%= isSaved ? "★ Saved" : "☆ Save" %>
+            </button>
+        </form>
+    <% } else { %>
+        <p class="save-recipe-login-message">
+            <a href="/signin">Sign in to save this recipe.</a>
+        </p>
+    <% } %>
+
+    <!-- user rating control -->
+    <% if (locals.loggedIn) { %>
+        <div class="user-rating-section">
+            <p>Your rating:</p>
+            <form
+                action="/<%= recipe.recipe_id %>/rate"
+                method="POST"
+                class="user-rating-form"
+            >
+                <% for (let s = 1; s <= 5; s++) { %>
+                    <button
+                        type="submit"
+                        name="rating"
+                        value="<%= s %>"
+                        class="user-rating-star <%= (typeof userRating !== 'undefined' && userRating >= s) ? 'user-star-checked' : '' %>"
+                    >
+                        &#9733;
+                    </button>
+                <% } %>
+            </form>
+        </div>
+    <% } else { %>
+        <p class="user-rating-login-message">
+            <a href="/signin">Sign in to rate this recipe.</a>
+        </p>
+    <% } %>
 </div>
 
 <comment>

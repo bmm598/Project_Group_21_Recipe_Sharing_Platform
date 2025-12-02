@@ -2,18 +2,57 @@
 
 <!-- search box -->
 <div class="search-bar-container">
-        <form action="/" method="GET" id="search-form">
-            <div class="search-bar-object">
+    <form action="/" method="GET" id="search-form">
+        <div class="search-bar-object">
+            <input
+                id="search-input"
+                type="search"
+                name="q"
+                placeholder="🔎︎ Search recipes by title, description, or tags"
+                value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>"
+                autocomplete="off"
+            >
+            <button type="submit">Search</button>
+        </div>
+
+        <!-- filters -->
+        <div class="search-filter-row">
+            <label>
+                Min time (min):
                 <input
-                    type="search"
-                    name="q"
-                    placeholder="🔎︎ Search recipes by title, description, or tags"
-                    value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>"
+                    type="number"
+                    name="minTime"
+                    min="0"
+                    value="<%= typeof minTime !== 'undefined' && minTime !== null ? minTime : '' %>"
                 >
-                <button type="submit">Search</button>
-            </div>
-        </form>
+            </label>
+
+            <label>
+                Max time (min):
+                <input
+                    type="number"
+                    name="maxTime"
+                    min="0"
+                    value="<%= typeof maxTime !== 'undefined' && maxTime !== null ? maxTime : '' %>"
+                >
+            </label>
+
+            <label>
+                Difficulty:
+                <select name="difficulty">
+                    <option value="" <%= (!difficulty || difficulty === '') ? 'selected' : '' %>>Any</option>
+                    <option value="Easy"   <%= difficulty === 'Easy'   ? 'selected' : '' %>>Easy</option>
+                    <option value="Medium" <%= difficulty === 'Medium' ? 'selected' : '' %>>Medium</option>
+                    <option value="Hard"   <%= difficulty === 'Hard'   ? 'selected' : '' %>>Hard</option>
+                </select>
+            </label>
+        </div>
+        
+        <!-- autocomplete suggestions -->
+        <div id="search-suggestions" class="search-suggestions"></div>
+    </form>
 </div>
+
 
 <!-- if recipes list exists -->
 <% if (locals.recipes) { %>
@@ -37,11 +76,11 @@
                             </h3>
                             <div><%= recipe.creator_name %> </div>
                             <div class="star-rating" id="starRating">
-                                <span class="star <%= recipe.avg_rating > 1? "checked" : null %>">&#9733;</span>
-                                <span class="star <%= recipe.avg_rating > 2? "checked" : null %>">&#9733;</span>
-                                <span class="star <%= recipe.avg_rating > 3? "checked" : null %>">&#9733;</span>
-                                <span class="star <%= recipe.avg_rating > 4? "checked" : null %>">&#9733;</span>
-                                <span class="star <%= recipe.avg_rating == 5? "checked" : null %>">&#9733;</span>
+                                <span class="star <%= recipe.avg_rating >= 1 ? 'checked' : '' %>">&#9733;</span>
+                                <span class="star <%= recipe.avg_rating >= 2 ? 'checked' : '' %>">&#9733;</span>
+                                <span class="star <%= recipe.avg_rating >= 3 ? 'checked' : '' %>">&#9733;</span>
+                                <span class="star <%= recipe.avg_rating >= 4 ? 'checked' : '' %>">&#9733;</span>
+                                <span class="star <%= recipe.avg_rating >= 5 ? 'checked' : '' %>">&#9733;</span>
                             </div>
                             <p>
                                 <%= recipe.body %> 

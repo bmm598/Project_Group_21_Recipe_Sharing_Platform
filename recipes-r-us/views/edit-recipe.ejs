@@ -1,0 +1,117 @@
+<%- include("partials/header.ejs") %>
+
+<div class="body-container">
+  <div class="body-object">
+    <h1>Edit Recipe</h1>
+
+    <% const isEdit = true; %>
+
+    <form
+      id="edit-recipe-form"
+      action="/<%= recipe.recipe_id %>/edit"
+      method="POST"
+    >
+      <div class="form-container">
+        <!-- title -->
+        <div class="form-object">
+          <input
+            type="text"
+            name="title"
+            placeholder="Recipe Title*"
+            required
+            value="<%= recipe.title || '' %>"
+          >
+        </div>
+
+        <!-- description / body -->
+        <div class="form-object">
+          <textarea
+            name="content"
+            placeholder="Description / Story (optional)"
+            rows="4"
+          ><%= recipe.body || '' %></textarea>
+        </div>
+
+        <!-- ingredients -->
+        <div class="form-object">
+          <textarea
+            name="ingredients"
+            placeholder="Ingredients (one per line)*"
+            rows="4"
+            required
+          ><%= recipe.ingredients || '' %></textarea>
+        </div>
+
+        <!-- instructions -->
+        <div class="form-object">
+          <textarea
+            name="instructions"
+            placeholder="Instructions (one step per line)*"
+            rows="6"
+            required
+          ><%= recipe.instructions || '' %></textarea>
+        </div>
+
+        <!-- tags -->
+        <div class="form-object">
+          <input
+            type="text"
+            name="tags"
+            placeholder="Tags (comma-separated, e.g. pasta, vegetarian)"
+            value="<%= recipe.tags || '' %>"
+          >
+        </div>
+
+        <!-- diet -->
+        <div class="form-object">
+          <input
+            type="text"
+            name="diet"
+            placeholder="Diet (e.g. Vegetarian, Vegan, Gluten-free)"
+            value="<%= recipe.diet || '' %>"
+          >
+        </div>
+
+        <!-- cook time -->
+        <div class="form-object">
+          <input
+            type="number"
+            name="cook_time"
+            min="0"
+            placeholder="Cook time in minutes"
+            value="<%= recipe.cook_time || '' %>"
+          >
+        </div>
+
+        <!-- difficulty -->
+        <div class="form-object">
+          <select name="difficulty">
+            <option value="" <%= !recipe.difficulty ? 'selected' : '' %>>
+              Select difficulty
+            </option>
+            <option value="Easy"   <%= recipe.difficulty === 'Easy'   ? 'selected' : '' %>>Easy</option>
+            <option value="Medium" <%= recipe.difficulty === 'Medium' ? 'selected' : '' %>>Medium</option>
+            <option value="Hard"   <%= recipe.difficulty === 'Hard'   ? 'selected' : '' %>>Hard</option>
+          </select>
+        </div>
+
+        <!-- image url -->
+        <div class="form-object">
+          <input
+            type="text"
+            name="img"
+            placeholder="Image URL (optional)"
+            value="<%= recipe.img || '' %>"
+          >
+        </div>
+
+        <!-- submit -->
+        <div class="form-object">
+          <input type="submit" value="Save Changes">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<%- include("partials/footer.ejs") %>
