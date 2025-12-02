@@ -285,7 +285,7 @@ app.get("/search/suggestions", async (req, res) => {
 app.get("/:id/accountcenter", (req, res) => {
     const account_id = req.params.id;
     // render the account center page
-    res.render("user/accountcenter.ejs", {
+    res.render("user/settings.ejs", {
         __dirname,
         user,
         loggedIn,
@@ -299,6 +299,34 @@ app.get("/:id/accountcenter/recipes", async (req, res) => {
     recipes = await getRecipes("");
 
     res.render("user/user-recipes.ejs", {
+        __dirname,
+        user,
+        loggedIn,
+        user_recipes,
+    })
+})
+
+app.get("/:id/accountcenter/collections", async (req, res) => {
+    const account_id = req.params.id;
+    const user_recipes = recipes.filter(recipe => recipe.creator_user_id == account_id);
+
+    recipes = await getRecipes("");
+
+    res.render("user/collections.ejs", {
+        __dirname,
+        user,
+        loggedIn,
+        user_recipes,
+    })
+})
+
+app.get("/:id/accountcenter/favorites", async (req, res) => {
+    const account_id = req.params.id;
+    const user_recipes = recipes.filter(recipe => recipe.creator_user_id == account_id);
+
+    recipes = await getRecipes("");
+
+    res.render("user/favorites.ejs", {
         __dirname,
         user,
         loggedIn,
@@ -445,6 +473,27 @@ app.post("/:id/rate", async (req, res) => {
     }
 });
 
+    res.render("recipe.ejs", {
+        __dirname,
+        recipe,
+        user, 
+        loggedIn,
+        comments,
+    })
+
+app.post("/:id/post-comment", async (req, res) => {
+    //console.log(req.body.content);
+    const recipe_id = req.params.id;
+    try {
+        await db.query(
+                `INSERT INTO comments (recipe_id, commenter_id, comment_text) VALUES ($1, $2, $3)`,
+                [recipe_id, user[0].creator_id, req.body.content]
+            );
+    } catch (error) {
+        console.error("Error executing query", error.stack);
+    }
+    res.redirect(`/${recipe_id}/recipe`);
+})
 
 app.get("/draftrecipe", (req, res) => {
     res.render("recipe-form.ejs", {

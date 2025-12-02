@@ -1,0 +1,30 @@
+<%- include("../partials/header.ejs") %>
+<div class="account-center-container">
+    <div class="account-center-object">
+        <h1>Settings</h1>
+    </div>  
+
+    <div class="account-center-object">
+        <div class="settings-object">
+            <h2>
+                Account Settings
+            </h2>
+            <p>
+                Name: <%= user[0].name %>
+            </p>
+            <p>
+                Username: <%= user[0].user_id %>
+            </p>
+            <h2>
+                <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter/recipes">Your Recipes</a>
+            </h2>
+            <h2>
+                <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter/collections">Collections</a>
+            </h2>
+            <h2>
+                <a href="<%= __dirname %><%= user[0].creator_id %>/accountcenter/favorites">Your Favorites</a>
+            </h2>
+        </div>
+    </div>  
+</div>
+<%- include("../partials/footer.ejs") %>

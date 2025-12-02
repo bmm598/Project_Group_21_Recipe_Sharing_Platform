@@ -1,5 +1,8 @@
 <%- include("../partials/header.ejs") %>
-
+<div class="account-center-container">
+    <div class="recipe-container">
+        <h1>Your Recipes (<%= user_recipes.length %>)</h1>
+    </div>
 <!-- if recipes list exists -->
 <% if (locals.user_recipes) { %>
     <div class="recipe-container">
@@ -55,5 +58,6 @@
         <% }); %>
     </div>
 <% } %>
+</div>
 
 <%- include("../partials/footer.ejs") %>
